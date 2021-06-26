@@ -5,14 +5,20 @@ export interface Theme {
 
 export interface BarTheme {
     /**
+     * UNUSED
+     *
      * Background color of the bar.
      */
     background: Color;
     /**
+     * UNUSED
+     *
      * Text color to be used for the statusline.
      */
     statusline: Color;
     /**
+     * UNUSED
+     *
      * Text color to be used for the separator.
      */
     separator: Color;
@@ -44,6 +50,8 @@ export interface BarTheme {
      */
     active_workspace: BarColors;
     /**
+     * UNUSED
+     *
      * Border, background and text color for a workspace button when the
      * workspace does not have focus and is not active (visible) on any output.
      * This will be the case for most workspaces.
@@ -55,6 +63,8 @@ export interface BarTheme {
      */
     urgent_workspace: BarColors;
     /**
+     * UNUSED
+     *
      * Border, background and text color for the binding mode indicator.
      * If not used, the colors will be taken from urgent_workspace.
      */
@@ -65,40 +75,42 @@ export interface WindowTheme {
     /**
      * A client which currently has the focus.
      */
-    "client.focused": WindowColors;
+    focused: WindowColors;
     /**
      * A client which is the focused one of its container,
      * but it does not have the focus at the moment.
      */
-    "client.focused_inactive": WindowColors;
+    focused_inactive: WindowColors;
     /**
      * A client which is not the focused one of its container.
      */
-    "client.unfocused": WindowColors;
+    unfocused: WindowColors;
     /**
      * A client which has its urgency hint activated.
      */
-    "client.urgent": WindowColors;
+    urgent: WindowColors;
     /**
      * Background and text color are used to draw placeholder
      * window contents (when restoring layouts).
      * Border and indicator are ignored.
      */
-    "client.placeholder": WindowColors;
+    placeholder: WindowColors;
     /**
      * Background color which will be used to paint the background of the
      * client window on top of which the client will be rendered.
      * Only clients which do not cover the whole area of this window expose
      * the color. Note that this colorclass only takes a single color.
      */
-    "client.background": Color;
+    background: Color;
 }
 
 export interface Colors {
     border: Color;
     background: Color;
     text: Color;
+    /** UNUSED */
     indicator?: Color;
+    /** UNUSED */
     child_border?: Color;
 }
 

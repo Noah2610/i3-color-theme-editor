@@ -8,6 +8,12 @@ function main() {
             background: "lightgray",
             statusline: "rebeccapurple",
             separator: "green",
+
+            focused_background: {
+                background: "#21242b",
+                text: "#ffffff",
+                border: "#ff0000",
+            },
         },
     });
     applyTheme(theme);

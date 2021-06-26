@@ -2,10 +2,10 @@ import { Colors, Theme } from "./theme";
 import { safeObjectKeys } from "./util/safeObjectKeys";
 
 export function applyTheme(theme: Theme) {
-    const el = document.querySelector<HTMLElement>(".desktop");
+    const el = document.querySelector<HTMLElement>(".theme");
 
     if (!el) {
-        throw new Error("[applyTheme error] Can't find .desktop element");
+        throw new Error("[applyTheme error] Can't find .theme element");
     }
 
     applyBarTheme(el, theme);
