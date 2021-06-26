@@ -1,4 +1,10 @@
 .desktop {
+    --theme-background: #000000;
+    --theme-statusline: #000000;
+    --theme-separator: #000000;
+
+    --config-separator-symbol: "|";
+
     position: fixed;
     inset: 0;
     display: flex;
@@ -7,10 +13,33 @@
 
 .desktop-bar {
     flex-grow: 0;
-    display: block;
+    display: flex;
+    justify-content: space-between;
     height: 2em;
     border: solid 0.2em teal;
     box-sizing: border-box;
+    background-color: var(--theme-background);
+    color: var(--theme-statusline);
+}
+
+.desktop-bar__workspaces {
+    position: relative;
+    width: 100%;
+    flex-grow: 1;
+}
+
+.desktop-bar__separator {
+    color: var(--theme-separator);
+    flex-grow: 0;
+}
+.desktop-bar__separator::before {
+    content: var(--config-separator-symbol);
+}
+
+.desktop-bar__statusline {
+    color: var(--theme-statusline);
+    width: 100%;
+    flex-grow: 1;
 }
 
 .desktop-body {
