@@ -1,6 +1,6 @@
 import { applyTheme } from "./applyTheme";
 import { createTheme } from "./createTheme";
-import { merge } from "./merge";
+import { merge } from "./util";
 
 function main() {
     const theme = merge(createTheme(), {
