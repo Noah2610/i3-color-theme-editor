@@ -16,12 +16,12 @@ export function createTheme(): Theme {
             binding_mode: newBarColors(),
         },
         window: {
-            "client.focused": newWindowColors(),
-            "client.focused_inactive": newWindowColors(),
-            "client.unfocused": newWindowColors(),
-            "client.urgent": newWindowColors(),
-            "client.placeholder": newWindowColors(),
-            "client.background": newColor(),
+            focused: newWindowColors(),
+            focused_inactive: newWindowColors(),
+            unfocused: newWindowColors(),
+            urgent: newWindowColors(),
+            placeholder: newWindowColors(),
+            background: newColor(),
         },
     };
 }
@@ -33,8 +33,8 @@ function newColor(color: Color = "#000000"): Color {
 function newBarColors(color: Color = "#000000"): BarColors {
     return {
         background: color,
-        text: color,
         border: color,
+        text: "#ffffff",
     };
 }
 
@@ -42,8 +42,8 @@ function newWindowColors(color: Color = "#000000"): WindowColors {
     return {
         border: color,
         background: color,
-        text: color,
-        indicator: color,
-        child_border: color,
+        text: "#ffffff",
+        indicator: "#ff0000",
+        child_border: "#ff0000",
     };
 }
