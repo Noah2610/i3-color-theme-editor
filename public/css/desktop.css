@@ -42,6 +42,7 @@
     color: var(--theme-bar-statusline);
     width: 100%;
     flex-grow: 1;
+    text-align: right;
     border: solid var(--config-bar-border-width);
     box-sizing: border-box;
 

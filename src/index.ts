@@ -1,8 +1,12 @@
 import { applyTheme } from "./applyTheme";
 import { createTheme } from "./createTheme";
+import { setupTime } from "./time";
 import { merge } from "./util";
 
 function main() {
+    const cleanup = setupTime();
+    window.onunload = cleanup;
+
     const colorBg = "#21242b";
     const colorText = "#e3e3e3";
     const colorUrgent = "#cf8600";
