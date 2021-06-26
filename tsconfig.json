@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "system",
+        "allowJs": false,
+        "sourceMap": true,
+        "outFile": "./public/bundle.js",
+        "rootDir": "./",
+        "isolatedModules": false,
+
+        "strict": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "noImplicitThis": true,
+        "alwaysStrict": true,
+
+        "noUncheckedIndexedAccess": true,
+
+        "moduleResolution": "node",
+        "baseUrl": "./",
+        "esModuleInterop": true,
+
+        "forceConsistentCasingInFileNames": true
+    }
+}
