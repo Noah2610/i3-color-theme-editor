@@ -1,12 +1,14 @@
 {
     "compilerOptions": {
         "target": "es5",
-        "module": "system",
+        "module": "CommonJS",
         "allowJs": false,
         "sourceMap": true,
-        "outFile": "./public/bundle.js",
         "rootDir": "./",
         "isolatedModules": false,
+
+        "outDir": "./build",
+        "noEmit": false,
 
         "strict": true,
         "noImplicitAny": true,
@@ -21,5 +23,6 @@
         "esModuleInterop": true,
 
         "forceConsistentCasingInFileNames": true
-    }
+    },
+    "include": ["src"]
 }
