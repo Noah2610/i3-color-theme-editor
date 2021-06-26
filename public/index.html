@@ -13,46 +13,108 @@
     <body>
         <main>
             <div class="desktop theme">
-                <div class="desktop-bar">
+                <div class="desktop-bar" data-theme="bar.focused_background">
                     <div class="desktop-bar__workspaces">
                         <div class="workspaces">
-                            <div class="workspace --focused">1</div>
-                            <div class="workspace">2</div>
-                            <div class="workspace --urgent">3</div>
-                            <div class="workspace">4</div>
-                            <div class="workspace">5</div>
-                            <div class="workspace">6</div>
-                            <div class="workspace">7</div>
-                            <div class="workspace">8</div>
-                            <div class="workspace">9</div>
-                            <div class="workspace">10</div>
+                            <div
+                                class="workspace --focused"
+                                data-theme="bar.focused_workspace"
+                            >
+                                1
+                            </div>
+                            <div
+                                class="workspace"
+                                data-theme="bar.active_workspace"
+                            >
+                                2
+                            </div>
+                            <div
+                                class="workspace --urgent"
+                                data-theme="bar.urgent_workspace"
+                            >
+                                3
+                            </div>
+                            <div
+                                class="workspace"
+                                data-theme="bar.urgent_workspace"
+                            >
+                                4
+                            </div>
+                            <div
+                                class="workspace"
+                                data-theme="bar.urgent_workspace"
+                            >
+                                5
+                            </div>
+                            <div
+                                class="workspace"
+                                data-theme="bar.urgent_workspace"
+                            >
+                                6
+                            </div>
+                            <div
+                                class="workspace"
+                                data-theme="bar.urgent_workspace"
+                            >
+                                7
+                            </div>
+                            <div
+                                class="workspace"
+                                data-theme="bar.urgent_workspace"
+                            >
+                                8
+                            </div>
+                            <div
+                                class="workspace"
+                                data-theme="bar.urgent_workspace"
+                            >
+                                9
+                            </div>
+                            <div
+                                class="workspace"
+                                data-theme="bar.urgent_workspace"
+                            >
+                                10
+                            </div>
                         </div>
                     </div>
 
-                    <div class="desktop-bar__separator"></div>
+                    <div
+                        class="desktop-bar__separator"
+                        data-theme="bar.focused_separator"
+                    ></div>
 
-                    <div class="desktop-bar__statusline now">
+                    <div
+                        class="desktop-bar__statusline now"
+                        data-theme="bar.statusline"
+                    >
                         Monday 01.01.2021 00:00:00
                     </div>
                 </div>
 
                 <div class="desktop-body">
-                    <div class="windows">
-                        <div class="window --focused">
+                    <div class="windows" data-theme="window.background">
+                        <div
+                            class="window --focused"
+                            data-theme="window.focused"
+                        >
                             <div class="window-bar">Window One!</div>
                             <div class="window-body"></div>
                         </div>
-                        <div class="window">
+                        <div class="window" data-theme="window.unfocused">
                             <div class="window-bar">Window Two!</div>
                             <div class="window-body"></div>
                         </div>
                     </div>
-                    <div class="windows">
-                        <div class="window --focused-inactive">
+                    <div class="windows" data-theme="window.background">
+                        <div
+                            class="window --focused-inactive"
+                            data-theme="window.focused_inactive"
+                        >
                             <div class="window-bar">Window Three!</div>
                             <div class="window-body"></div>
                         </div>
-                        <div class="window --urgent">
+                        <div class="window --urgent" data-theme="window.urgent">
                             <div class="window-bar">Window Four!</div>
                             <div class="window-body"></div>
                         </div>
