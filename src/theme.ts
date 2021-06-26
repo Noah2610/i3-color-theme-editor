@@ -1,5 +1,3 @@
-export { createTheme } from "./createTheme";
-
 export interface Theme {
     bar: BarConfig;
     window: WindowConfig;
