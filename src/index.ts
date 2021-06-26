@@ -3,16 +3,69 @@ import { createTheme } from "./createTheme";
 import { merge } from "./util";
 
 function main() {
+    const colorBg = "#21242b";
+    const colorText = "#e3e3e3";
+    const colorUrgent = "#cf8600";
+
     const theme = merge(createTheme(), {
         bar: {
-            background: "lightgray",
-            statusline: "rebeccapurple",
-            separator: "green",
-
             focused_background: {
-                background: "#21242b",
+                background: colorBg,
+                border: colorBg,
+                text: colorText,
+            },
+            focused_statusline: {
+                background: colorBg,
+                border: colorBg,
+                text: colorText,
+            },
+            focused_separator: {
+                background: colorBg,
+                border: colorBg,
+                text: colorText,
+            },
+            active_workspace: {
+                background: colorBg,
+                border: colorBg,
+                text: colorText,
+            },
+            inactive_workspace: {
+                background: colorBg,
+                border: colorBg,
+                text: colorText,
+            },
+            focused_workspace: {
+                background: "#404040",
+                border: "#404040",
+                text: colorText,
+            },
+            urgent_workspace: {
+                background: colorBg,
+                border: colorUrgent,
                 text: "#ffffff",
-                border: "#ff0000",
+            },
+        },
+
+        window: {
+            focused: {
+                background: "#3c7d25",
+                border: "#3c7d25",
+                text: "#000000",
+            },
+            focused_inactive: {
+                background: "#315781",
+                border: "#315781",
+                text: "#c2c6cf",
+            },
+            unfocused: {
+                background: colorBg,
+                border: colorBg,
+                text: "#c2c6cf",
+            },
+            urgent: {
+                background: colorUrgent,
+                border: colorUrgent,
+                text: "#ffffff",
             },
         },
     });
