@@ -1,9 +1,9 @@
 export interface Theme {
-    bar: BarConfig;
-    window: WindowConfig;
+    bar: BarTheme;
+    window: WindowTheme;
 }
 
-export interface BarConfig {
+export interface BarTheme {
     /**
      * Background color of the bar.
      */
@@ -61,7 +61,7 @@ export interface BarConfig {
     binding_mode: BarColors;
 }
 
-export interface WindowConfig {
+export interface WindowTheme {
     /**
      * A client which currently has the focus.
      */
@@ -94,16 +94,17 @@ export interface WindowConfig {
     "client.background": Color;
 }
 
-export interface BarColors {
+export interface Colors {
     border: Color;
     background: Color;
     text: Color;
+    indicator?: Color;
+    child_border?: Color;
 }
 
-export interface WindowColors {
-    border: Color;
-    background: Color;
-    text: Color;
+export interface BarColors extends Omit<Colors, "indicator" | "child_border"> {}
+
+export interface WindowColors extends Colors {
     indicator: Color;
     child_border: Color;
 }
