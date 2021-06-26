@@ -15,6 +15,7 @@
         "strictNullChecks": true,
         "noImplicitThis": true,
         "alwaysStrict": true,
+        "downlevelIteration": true,
 
         "noUncheckedIndexedAccess": true,
 
