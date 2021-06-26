@@ -71,6 +71,11 @@ function main() {
                 border: colorUrgent,
                 text: "#ffffff",
             },
+            placeholder: {
+                background: "#666666",
+                border: "#666666",
+                text: "#ffffff",
+            },
         },
     });
     applyTheme(theme);

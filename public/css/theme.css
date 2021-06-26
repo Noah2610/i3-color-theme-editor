@@ -55,6 +55,10 @@
     --theme-window-urgent-background: #000000;
     --theme-window-urgent-text: #000000;
 
+    --theme-window-placeholder-border: #000000;
+    --theme-window-placeholder-background: #000000;
+    --theme-window-placeholder-text: #000000;
+
     --theme-window-background: #000000;
 
     /* (unused) */
@@ -67,9 +71,6 @@
     --theme-window-unfocused-child_border: #000000;
     --theme-window-urgent-indicator: #000000;
     --theme-window-urgent-child_border: #000000;
-    --theme-window-placeholder-border: #000000;
-    --theme-window-placeholder-background: #000000;
-    --theme-window-placeholder-text: #000000;
     --theme-window-placeholder-indicator: #000000;
     --theme-window-placeholder-child_border: #000000;
 
