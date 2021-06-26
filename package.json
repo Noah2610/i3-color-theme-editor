@@ -1,5 +1,5 @@
 {
-    "name": "i3-color-editor",
+    "name": "i3-color-theme-editor",
     "version": "0.0.0",
     "main": "index.js",
     "author": "Noah Rosenzweig <rosenzweig.noah@gmail.com>",
