@@ -18,8 +18,8 @@
     height: 2em;
     border: solid 0.2em teal;
     box-sizing: border-box;
-    background-color: var(--theme-background);
-    color: var(--theme-statusline);
+    background-color: var(--theme-bar-background);
+    color: var(--theme-bar-statusline);
 }
 
 .desktop-bar__workspaces {
@@ -29,7 +29,7 @@
 }
 
 .desktop-bar__separator {
-    color: var(--theme-separator);
+    color: var(--theme-bar-separator);
     flex-grow: 0;
 }
 .desktop-bar__separator::before {
@@ -37,7 +37,7 @@
 }
 
 .desktop-bar__statusline {
-    color: var(--theme-statusline);
+    color: var(--theme-bar-statusline);
     width: 100%;
     flex-grow: 1;
 }
