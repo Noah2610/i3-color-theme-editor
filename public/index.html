@@ -3,8 +3,43 @@
     <head>
         <meta charset="UTF-8" />
         <title>i3 color editor</title>
+
+        <link rel="stylesheet" href="./css/main.css" />
+        <link rel="stylesheet" href="./css/desktop.css" />
+        <link rel="stylesheet" href="./css/workspace.css" />
+        <link rel="stylesheet" href="./css/window.css" />
     </head>
     <body>
+        <main>
+            <div class="desktop">
+                <div class="desktop-bar">
+                    <div class="workspaces">
+                        <div class="workspace">1</div>
+                        <div class="workspace">2</div>
+                        <div class="workspace">3</div>
+                        <div class="workspace">4</div>
+                        <div class="workspace">5</div>
+                        <div class="workspace">6</div>
+                        <div class="workspace">7</div>
+                        <div class="workspace">8</div>
+                        <div class="workspace">9</div>
+                        <div class="workspace">10</div>
+                    </div>
+                </div>
+
+                <div class="desktop-body">
+                    <div class="windows">
+                        <div class="window --active">
+                            <div class="window-bar">Window One!</div>
+                        </div>
+                        <div class="window --inactive">
+                            <div class="window-bar">Window Two!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
         <script type="text/javascript" src="./bundle.js"></script>
     </body>
 </html>
