@@ -1,5 +1,4 @@
-import { applyTheme } from "./applyTheme";
-import { createTheme } from "./createTheme";
+import { applyTheme, createTheme } from "./theme";
 import { setupTime } from "./time";
 import { merge } from "./util";
 

@@ -1,5 +1,5 @@
-import { Colors, Theme } from "./theme";
-import { safeObjectKeys } from "./util/safeObjectKeys";
+import { Colors, Theme } from "./types";
+import { safeObjectKeys } from "../util/safeObjectKeys";
 
 export function applyTheme(theme: Theme) {
     const el = document.querySelector<HTMLElement>(".theme");

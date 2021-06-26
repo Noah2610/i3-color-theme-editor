@@ -11,8 +11,6 @@ export interface BarTheme {
      */
     background: Color;
     /**
-     * UNUSED
-     *
      * Text color to be used for the statusline.
      */
     statusline: Color;

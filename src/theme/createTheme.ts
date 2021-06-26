@@ -1,4 +1,4 @@
-import { BarColors, Color, Theme, WindowColors } from "./theme";
+import { BarColors, Color, Theme, WindowColors } from "./types";
 
 export function createTheme(): Theme {
     return {
