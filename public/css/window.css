@@ -31,6 +31,12 @@
     border-color: var(--theme-window-unfocused-border);
 }
 
+.window.--focused-inactive .window-bar {
+    background-color: var(--theme-window-focused_inactive-background);
+    color: var(--theme-window-focused_inactive-text);
+    border-color: var(--theme-window-focused_inactive-border);
+}
+
 .window.--focused .window-bar {
     background-color: var(--theme-window-focused-background);
     color: var(--theme-window-focused-text);

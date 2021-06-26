@@ -43,6 +43,10 @@
     --theme-window-focused-background: #000000;
     --theme-window-focused-text: #000000;
 
+    --theme-window-focused_inactive-border: #000000;
+    --theme-window-focused_inactive-background: #000000;
+    --theme-window-focused_inactive-text: #000000;
+
     --theme-window-unfocused-border: #000000;
     --theme-window-unfocused-background: #000000;
     --theme-window-unfocused-text: #000000;
@@ -57,9 +61,6 @@
 
     --theme-window-focused-indicator: #000000;
     --theme-window-focused-child_border: #000000;
-    --theme-window-focused_inactive-border: #000000;
-    --theme-window-focused_inactive-background: #000000;
-    --theme-window-focused_inactive-text: #000000;
     --theme-window-focused_inactive-indicator: #000000;
     --theme-window-focused_inactive-child_border: #000000;
     --theme-window-unfocused-indicator: #000000;

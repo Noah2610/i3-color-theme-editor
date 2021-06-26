@@ -53,8 +53,6 @@
 .desktop-body {
     position: relative;
     flex-grow: 1;
-    display: block;
-
-    border: solid 0.2em tan;
-    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
 }
