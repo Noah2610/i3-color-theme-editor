@@ -1,3 +1,4 @@
 export * from "./types";
-export { createTheme } from "./createTheme";
 export { applyTheme } from "./applyTheme";
+export { defaultTheme } from "./defaultTheme";
+export { getTheme } from "./getTheme";
