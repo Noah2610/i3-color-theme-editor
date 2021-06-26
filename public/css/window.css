@@ -2,9 +2,10 @@
     position: relative;
     width: 100%;
     height: 100%;
-
     display: flex;
     justify-content: space-between;
+
+    background-color: var(--theme-window-background);
 }
 
 .window {
@@ -12,16 +13,24 @@
     display: block;
     flex-grow: 1;
     flex-shrink: 1;
+    border: solid var(--config-window-border-width);
+    box-sizing: border-box;
+
+    background-color: var(--theme-window-unfocused-background);
+    color: var(--theme-window-unfocused-text);
+    border-color: var(--theme-window-unfocused-border);
 }
 
-.window.--active {
-    border: 4px solid #00ffff;
-    box-sizing: border-box;
+.window.--focused {
+    background-color: var(--theme-window-focused-background);
+    color: var(--theme-window-focused-text);
+    border-color: var(--theme-window-focused-border);
 }
 
-.window.--inactive {
-    border: 4px solid #00ffff88;
-    box-sizing: border-box;
+.window.--urgent {
+    background-color: var(--theme-window-urgent-background);
+    color: var(--theme-window-urgent-text);
+    border-color: var(--theme-window-urgent-border);
 }
 
 .window-bar {

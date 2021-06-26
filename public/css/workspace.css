@@ -12,7 +12,22 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
-    border: solid 0.1em #ff4444;
+    border: solid var(--config-bar-border-width);
     box-sizing: border-box;
+
+    background-color: var(--theme-bar-active_workspace-background);
+    color: var(--theme-bar-active_workspace-text);
+    border-color: var(--theme-bar-active_workspace-border);
+}
+
+.workspace.--focused {
+    background-color: var(--theme-bar-focused_workspace-background);
+    color: var(--theme-bar-focused_workspace-text);
+    border-color: var(--theme-bar-focused_workspace-border);
+}
+
+.workspace.--urgent {
+    background-color: var(--theme-bar-urgent_workspace-background);
+    color: var(--theme-bar-urgent_workspace-text);
+    border-color: var(--theme-bar-urgent_workspace-border);
 }

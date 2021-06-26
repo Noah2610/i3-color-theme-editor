@@ -1,10 +1,4 @@
 .desktop {
-    --theme-bar-background: #000000;
-    --theme-bar-statusline: #000000;
-    --theme-bar-separator: #000000;
-
-    --config-bar-separator-symbol: "|";
-
     position: fixed;
     inset: 0;
     display: flex;
@@ -16,10 +10,12 @@
     display: flex;
     justify-content: space-between;
     height: 2em;
-    border: solid 0.2em teal;
+    border: solid var(--config-bar-border-width);
     box-sizing: border-box;
-    background-color: var(--theme-bar-background);
-    color: var(--theme-bar-statusline);
+
+    background-color: var(--theme-bar-focused_background-background);
+    color: var(--theme-bar-focused_background-text);
+    border-color: var(--theme-bar-focused_background-border);
 }
 
 .desktop-bar__workspaces {
@@ -31,6 +27,12 @@
 .desktop-bar__separator {
     color: var(--theme-bar-separator);
     flex-grow: 0;
+    border: solid var(--config-bar-border-width);
+    box-sizing: border-box;
+
+    background-color: var(--theme-bar-focused_separator-background);
+    color: var(--theme-bar-focused_separator-text);
+    border-color: var(--theme-bar-focused_separator-border);
 }
 .desktop-bar__separator::before {
     content: var(--config-bar-separator-symbol);
@@ -40,6 +42,12 @@
     color: var(--theme-bar-statusline);
     width: 100%;
     flex-grow: 1;
+    border: solid var(--config-bar-border-width);
+    box-sizing: border-box;
+
+    background-color: var(--theme-bar-focused_statusline-background);
+    color: var(--theme-bar-focused_statusline-text);
+    border-color: var(--theme-bar-focused_statusline-border);
 }
 
 .desktop-body {

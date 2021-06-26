@@ -1,0 +1,81 @@
+.theme {
+    /* BAR THEME COLORS */
+
+    --theme-bar-focused_background-background: #000000;
+    --theme-bar-focused_background-text: #000000;
+    --theme-bar-focused_background-border: #000000;
+
+    --theme-bar-focused_statusline-background: #000000;
+    --theme-bar-focused_statusline-text: #000000;
+    --theme-bar-focused_statusline-border: #000000;
+
+    --theme-bar-focused_separator-background: #000000;
+    --theme-bar-focused_separator-text: #000000;
+    --theme-bar-focused_separator-border: #000000;
+
+    --theme-bar-focused_workspace-background: #000000;
+    --theme-bar-focused_workspace-text: #000000;
+    --theme-bar-focused_workspace-border: #000000;
+
+    --theme-bar-active_workspace-background: #000000;
+    --theme-bar-active_workspace-text: #000000;
+    --theme-bar-active_workspace-border: #000000;
+
+    --theme-bar-urgent_workspace-background: #000000;
+    --theme-bar-urgent_workspace-text: #000000;
+    --theme-bar-urgent_workspace-border: #000000;
+
+    /* (unused) */
+    --theme-bar-background: #000000;
+    --theme-bar-statusline: #000000;
+    --theme-bar-separator: #000000;
+    --theme-bar-inactive_workspace-background: #000000;
+    --theme-bar-inactive_workspace-text: #000000;
+    --theme-bar-inactive_workspace-border: #000000;
+    --theme-bar-binding_mode-background: #000000;
+    --theme-bar-binding_mode-text: #000000;
+    --theme-bar-binding_mode-border: #000000;
+
+    /* WINDOW THEME COLORS */
+    /* (all indicator and child_border colors are unused) */
+
+    --theme-window-focused-border: #000000;
+    --theme-window-focused-background: #000000;
+    --theme-window-focused-text: #000000;
+
+    --theme-window-unfocused-border: #000000;
+    --theme-window-unfocused-background: #000000;
+    --theme-window-unfocused-text: #000000;
+
+    --theme-window-urgent-border: #000000;
+    --theme-window-urgent-background: #000000;
+    --theme-window-urgent-text: #000000;
+
+    --theme-window-background: #000000;
+
+    /* (unused) */
+
+    --theme-window-focused-indicator: #000000;
+    --theme-window-focused-child_border: #000000;
+    --theme-window-focused_inactive-border: #000000;
+    --theme-window-focused_inactive-background: #000000;
+    --theme-window-focused_inactive-text: #000000;
+    --theme-window-focused_inactive-indicator: #000000;
+    --theme-window-focused_inactive-child_border: #000000;
+    --theme-window-unfocused-indicator: #000000;
+    --theme-window-unfocused-child_border: #000000;
+    --theme-window-urgent-indicator: #000000;
+    --theme-window-urgent-child_border: #000000;
+    --theme-window-placeholder-border: #000000;
+    --theme-window-placeholder-background: #000000;
+    --theme-window-placeholder-text: #000000;
+    --theme-window-placeholder-indicator: #000000;
+    --theme-window-placeholder-child_border: #000000;
+
+    /* THEME CONFIG */
+    /* Default values for i3 settings that aren't configurable. */
+
+    --config-bar-separator-symbol: "|";
+    --config-bar-border-width: 2px;
+    --config-window-border-width: 2px;
+}
