@@ -13,24 +13,6 @@
     display: block;
     flex-grow: 1;
     flex-shrink: 1;
-    border: solid var(--config-window-border-width);
-    box-sizing: border-box;
-
-    background-color: var(--theme-window-unfocused-background);
-    color: var(--theme-window-unfocused-text);
-    border-color: var(--theme-window-unfocused-border);
-}
-
-.window.--focused {
-    background-color: var(--theme-window-focused-background);
-    color: var(--theme-window-focused-text);
-    border-color: var(--theme-window-focused-border);
-}
-
-.window.--urgent {
-    background-color: var(--theme-window-urgent-background);
-    color: var(--theme-window-urgent-text);
-    border-color: var(--theme-window-urgent-border);
 }
 
 .window-bar {
@@ -41,6 +23,22 @@
     display: flex;
     align-items: center;
 
-    border: 0.1em solid #ff4444;
+    border: solid var(--config-window-border-width);
     box-sizing: border-box;
+
+    background-color: var(--theme-window-unfocused-background);
+    color: var(--theme-window-unfocused-text);
+    border-color: var(--theme-window-unfocused-border);
+}
+
+.window.--focused .window-bar {
+    background-color: var(--theme-window-focused-background);
+    color: var(--theme-window-focused-text);
+    border-color: var(--theme-window-focused-border);
+}
+
+.window.--urgent .window-bar {
+    background-color: var(--theme-window-urgent-background);
+    color: var(--theme-window-urgent-text);
+    border-color: var(--theme-window-urgent-border);
 }

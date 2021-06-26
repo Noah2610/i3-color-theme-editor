@@ -1,11 +1,6 @@
-:root {
-}
-
 body {
     margin: 0;
     background-color: #000000;
     color: #ffffff;
-}
-
-main {
+    font-family: monospace;
 }
