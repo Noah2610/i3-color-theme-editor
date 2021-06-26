@@ -1,14 +1,23 @@
 import { applyTheme, getTheme } from "./theme";
+import { setupEditor } from "./editor";
 import { setupTime } from "./time";
 
 function main() {
-    const cleanup = setupTime();
-    window.onunload = cleanup;
+    const cleanups: (() => void)[] = [];
 
-    const theme = getTheme();
-    applyTheme(theme);
+    cleanups.push(setupTime());
 
-    console.log(theme);
+    const context = {
+        theme: getTheme(),
+    };
+    applyTheme(context.theme);
+
+    cleanups.push(setupEditor(context.theme));
+
+    {
+        const cleanup = () => cleanups.forEach((cb) => cb());
+        window.onunload = cleanup;
+    }
 }
 
 window.onload = main;
