@@ -1,12 +1,8 @@
 import { Colors, Theme } from "./types";
-import { safeObjectKeys } from "../util/safeObjectKeys";
+import { expectEl, safeObjectKeys } from "../util";
 
 export function applyTheme(theme: Theme) {
-    const el = document.querySelector<HTMLElement>(".theme");
-
-    if (!el) {
-        throw new Error("[applyTheme error] Can't find .theme element");
-    }
+    const el = expectEl(".theme");
 
     applyBarTheme(el, theme);
     applyWindowTheme(el, theme);
