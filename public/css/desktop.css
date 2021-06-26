@@ -1,9 +1,9 @@
 .desktop {
-    --theme-background: #000000;
-    --theme-statusline: #000000;
-    --theme-separator: #000000;
+    --theme-bar-background: #000000;
+    --theme-bar-statusline: #000000;
+    --theme-bar-separator: #000000;
 
-    --config-separator-symbol: "|";
+    --config-bar-separator-symbol: "|";
 
     position: fixed;
     inset: 0;
@@ -33,7 +33,7 @@
     flex-grow: 0;
 }
 .desktop-bar__separator::before {
-    content: var(--config-separator-symbol);
+    content: var(--config-bar-separator-symbol);
 }
 
 .desktop-bar__statusline {
