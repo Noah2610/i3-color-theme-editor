@@ -15,6 +15,7 @@ export function setupEditor(theme: Theme): () => void {
         .filter((u) => !!u) as (() => void)[];
 
     unsubs.push(setupEditorForm(editorEl, theme));
+    unsubs.push(setupEditorControls(editorEl));
 
     return () => unsubs.forEach((unsub) => unsub());
 }
@@ -95,6 +96,18 @@ function setupEditorForm(editorEl: HTMLElement, theme: Theme): () => void {
         formEl.removeEventListener("submit", onSubmit),
         formEl.removeEventListener("change", onChange)
     );
+}
+
+function setupEditorControls(editorEl: HTMLElement): () => void {
+    const onKey = (event: KeyboardEvent) => {
+        if (event.key === "Escape") {
+            closeEditor(editorEl);
+        }
+    };
+
+    document.addEventListener("keyup", onKey);
+
+    return () => document.removeEventListener("keyup", onKey);
 }
 
 function setupElListener(

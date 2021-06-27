@@ -9,6 +9,6 @@ body {
     display: none !important;
 }
 
-[data-theme] {
+[data-theme]:not(.--noedit) {
     cursor: pointer;
 }
