@@ -25,7 +25,6 @@
 }
 
 .desktop-bar__separator {
-    color: var(--theme-bar-separator);
     flex-grow: 0;
     border: solid var(--config-bar-border-width);
     box-sizing: border-box;
@@ -39,7 +38,6 @@
 }
 
 .desktop-bar__statusline {
-    color: var(--theme-bar-statusline);
     width: 100%;
     flex-grow: 1;
     text-align: right;
