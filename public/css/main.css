@@ -8,3 +8,7 @@ body {
 .--hidden {
     display: none !important;
 }
+
+[data-theme] {
+    cursor: pointer;
+}

@@ -209,6 +209,9 @@ function getValidThemeKey(
     ];
 }
 
+const OPEN_EDITOR_URGENT_TIMEOUT_MS = 500;
+let openEditorUrgentTimeoutId: NodeJS.Timeout | null = null;
+
 function openEditor(editorEl: HTMLElement, event: MouseEvent) {
     const mousePos = {
         x: event.pageX,
@@ -218,7 +221,15 @@ function openEditor(editorEl: HTMLElement, event: MouseEvent) {
     editorEl.style.left = `${mousePos.x}px`;
     editorEl.style.top = `${mousePos.y}px`;
 
-    editorEl.classList.add("--open");
+    editorEl.classList.add("--open", "--urgent");
+
+    if (openEditorUrgentTimeoutId !== null) {
+        clearTimeout(openEditorUrgentTimeoutId);
+    }
+    openEditorUrgentTimeoutId = setTimeout(() => {
+        openEditorUrgentTimeoutId = null;
+        editorEl.classList.remove("--urgent");
+    }, OPEN_EDITOR_URGENT_TIMEOUT_MS);
 }
 
 function closeEditor(editorEl: HTMLElement) {
