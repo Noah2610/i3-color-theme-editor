@@ -9,10 +9,11 @@
         <link rel="stylesheet" href="./css/desktop.css" />
         <link rel="stylesheet" href="./css/workspace.css" />
         <link rel="stylesheet" href="./css/window.css" />
+        <link rel="stylesheet" href="./css/menu.css" />
     </head>
     <body>
-        <main>
-            <div class="desktop theme">
+        <main class="theme">
+            <div class="desktop">
                 <div class="desktop-bar" data-theme="bar.focused_background">
                     <div class="desktop-bar__workspaces">
                         <div class="workspaces">
@@ -120,6 +121,14 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div
+                class="menu --open window --focused"
+                data-theme="window.focused"
+            >
+                <div class="window-bar"></div>
+                <div class="window-body --no-placeholder"></div>
             </div>
         </main>
 

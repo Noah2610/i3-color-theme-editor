@@ -61,7 +61,7 @@
     border-color: var(--theme-window-placeholder-border);
 }
 
-.window-body::before {
+.window-body:not(.--no-placeholder)::before {
     content: "Window Placeholder";
     position: absolute;
 }
