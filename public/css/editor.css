@@ -16,8 +16,11 @@
     pointer-events: all;
 }
 
-.editor .editor-input {
+.editor .editor-body {
     padding: 1em;
+}
+
+.editor .editor-input {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -26,4 +29,8 @@
 
 .editor .editor-input .input-color-label {
     text-decoration: underline;
+}
+
+.editor .editor-form .editor-form__submit {
+    margin-top: 1em;
 }

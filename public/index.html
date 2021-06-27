@@ -132,56 +132,64 @@
 
             <div class="editor window --focused" data-theme="window.focused">
                 <div class="window-bar"></div>
-                <div class="window-body --no-placeholder">
-                    <div class="editor-input --hidden" data-editor="color">
-                        <label for="input-color" class="input-color-label">
-                            Color
-                        </label>
+                <div class="editor-body window-body --no-placeholder">
+                    <form action="#" class="editor-form" data-editor-target="">
+                        <div class="editor-input --hidden" data-editor="color">
+                            <label for="input-color" class="input-color-label">
+                                Color
+                            </label>
+                            <input
+                                name="input-color"
+                                type="text"
+                                class="input input--color"
+                                data-editor-color="color"
+                            />
+                        </div>
+                        <div class="editor-input --hidden" data-editor="colors">
+                            <label
+                                for="input-colors-border"
+                                class="input-color-label"
+                            >
+                                Border
+                            </label>
+                            <input
+                                name="input-colors-border"
+                                type="text"
+                                class="input input--color"
+                                data-editor-color="border"
+                            />
+                            <label
+                                for="input-colors-background"
+                                class="input-color-label"
+                            >
+                                Background
+                            </label>
+                            <input
+                                name="input-colors-background"
+                                type="text"
+                                class="input input--color"
+                                data-editor-color="background"
+                            />
+                            <label
+                                for="input-colors-text"
+                                class="input-color-label"
+                            >
+                                Text
+                            </label>
+                            <input
+                                name="input-colors-text"
+                                type="text"
+                                class="input input--color"
+                                data-editor-color="text"
+                            />
+                        </div>
+
                         <input
-                            name="input-color"
-                            type="text"
-                            class="input input--color"
-                            data-editor-color="color"
+                            type="submit"
+                            value="Update"
+                            class="button editor-form__submit"
                         />
-                    </div>
-                    <div class="editor-input --hidden" data-editor="colors">
-                        <label
-                            for="input-colors-border"
-                            class="input-color-label"
-                        >
-                            Border
-                        </label>
-                        <input
-                            name="input-colors-border"
-                            type="text"
-                            class="input input--color"
-                            data-editor-color="border"
-                        />
-                        <label
-                            for="input-colors-background"
-                            class="input-color-label"
-                        >
-                            Background
-                        </label>
-                        <input
-                            name="input-colors-background"
-                            type="text"
-                            class="input input--color"
-                            data-editor-color="background"
-                        />
-                        <label
-                            for="input-colors-text"
-                            class="input-color-label"
-                        >
-                            Text
-                        </label>
-                        <input
-                            name="input-colors-text"
-                            type="text"
-                            class="input input--color"
-                            data-editor-color="text"
-                        />
-                    </div>
+                    </form>
                 </div>
             </div>
         </main>
