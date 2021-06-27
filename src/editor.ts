@@ -94,6 +94,34 @@ function setupElListener(
                 editorEl.classList.add("--hidden");
             }
         }
+
+        const inputColorEls = expectEls<HTMLInputElement>(
+            `.editor-input[data-editor="${targetDataEditor}"] input.input--color`,
+            editorEl,
+        );
+        for (const inputColorEl of inputColorEls) {
+            const dataEditorColor =
+                inputColorEl.getAttribute("data-editor-color");
+            if (dataEditorColor === null) {
+                continue;
+            }
+            switch (dataEditorColor) {
+                case "color": {
+                    if (typeof themeValue === "string") {
+                        inputColorEl.value = themeValue;
+                    }
+                    break;
+                }
+                case "border":
+                case "background":
+                case "text": {
+                    if (typeof themeValue !== "string") {
+                        inputColorEl.value = themeValue[dataEditorColor];
+                    }
+                    break;
+                }
+            }
+        }
     };
 
     editableEl.addEventListener("click", listener);
