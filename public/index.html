@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="./css/desktop.css" />
         <link rel="stylesheet" href="./css/workspace.css" />
         <link rel="stylesheet" href="./css/window.css" />
-        <link rel="stylesheet" href="./css/menu.css" />
+        <link rel="stylesheet" href="./css/editor.css" />
     </head>
     <body>
         <main class="theme">
@@ -37,43 +37,43 @@
                             </div>
                             <div
                                 class="workspace"
-                                data-theme="bar.urgent_workspace"
+                                data-theme="bar.active_workspace"
                             >
                                 4
                             </div>
                             <div
                                 class="workspace"
-                                data-theme="bar.urgent_workspace"
+                                data-theme="bar.active_workspace"
                             >
                                 5
                             </div>
                             <div
                                 class="workspace"
-                                data-theme="bar.urgent_workspace"
+                                data-theme="bar.active_workspace"
                             >
                                 6
                             </div>
                             <div
                                 class="workspace"
-                                data-theme="bar.urgent_workspace"
+                                data-theme="bar.active_workspace"
                             >
                                 7
                             </div>
                             <div
                                 class="workspace"
-                                data-theme="bar.urgent_workspace"
+                                data-theme="bar.active_workspace"
                             >
                                 8
                             </div>
                             <div
                                 class="workspace"
-                                data-theme="bar.urgent_workspace"
+                                data-theme="bar.active_workspace"
                             >
                                 9
                             </div>
                             <div
                                 class="workspace"
-                                data-theme="bar.urgent_workspace"
+                                data-theme="bar.active_workspace"
                             >
                                 10
                             </div>
@@ -130,9 +130,55 @@
                 </div>
             </div>
 
-            <div class="menu window --focused" data-theme="window.focused">
+            <div class="editor window --focused" data-theme="window.focused">
                 <div class="window-bar"></div>
-                <div class="window-body --no-placeholder"></div>
+                <div class="window-body --no-placeholder">
+                    <div class="editor-input --hidden" data-editor="color">
+                        <label for="input-color" class="input-color-label">
+                            Color
+                        </label>
+                        <input
+                            name="input-color"
+                            type="text"
+                            class="input input--color"
+                        />
+                    </div>
+                    <div class="editor-input --hidden" data-editor="colors">
+                        <label
+                            for="input-colors-border"
+                            class="input-color-label"
+                        >
+                            Border
+                        </label>
+                        <input
+                            name="input-colors-border"
+                            type="text"
+                            class="input input--color"
+                        />
+                        <label
+                            for="input-colors-background"
+                            class="input-color-label"
+                        >
+                            Background
+                        </label>
+                        <input
+                            name="input-colors-background"
+                            type="text"
+                            class="input input--color"
+                        />
+                        <label
+                            for="input-colors-text"
+                            class="input-color-label"
+                        >
+                            Text
+                        </label>
+                        <input
+                            name="input-colors-text"
+                            type="text"
+                            class="input input--color"
+                        />
+                    </div>
+                </div>
             </div>
         </main>
 

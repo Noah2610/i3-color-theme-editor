@@ -10,14 +10,17 @@
 
 .window {
     position: relative;
-    display: block;
     flex-grow: 1;
     flex-shrink: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .window-bar {
     width: 100%;
     height: 2em;
+    flex-grow: 0;
+    flex-shrink: 0;
     padding-left: 1em;
 
     display: flex;
@@ -51,14 +54,28 @@
 
 .window-body {
     position: relative;
-    width: 100%;
-    height: 100%;
+    flex-grow: 1;
+    flex-shrink: 1;
     border: solid var(--config-window-border-width);
     box-sizing: border-box;
 
+    border-color: var(--theme-window-unfocused-border);
+
     background-color: var(--theme-window-placeholder-background);
     color: var(--theme-window-placeholder-text);
-    border-color: var(--theme-window-placeholder-border);
+    /* border-color: var(--theme-window-placeholder-border); */
+}
+
+.window.--focused-inactive .window-body {
+    border-color: var(--theme-window-focused_inactive-border);
+}
+
+.window.--focused .window-body {
+    border-color: var(--theme-window-focused-border);
+}
+
+.window.--urgent .window-body {
+    border-color: var(--theme-window-urgent-border);
 }
 
 .window-body:not(.--no-placeholder)::before {

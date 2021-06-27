@@ -4,3 +4,7 @@ body {
     color: #ffffff;
     font-family: monospace;
 }
+
+.--hidden {
+    display: none !important;
+}
