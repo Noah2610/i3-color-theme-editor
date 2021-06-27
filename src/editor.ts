@@ -144,10 +144,3 @@ function openEditor(editorEl: HTMLElement, event: MouseEvent) {
 function closeEditor(editorEl: HTMLElement) {
     editorEl.classList.remove("--open");
 }
-
-function setupColorListener(
-    el: HTMLElement,
-    setTheme: (theme: RecursivePartial<Theme>) => void,
-): (() => void) | null {
-    throw new Error("Function not implemented.");
-}

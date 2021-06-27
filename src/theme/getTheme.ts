@@ -3,11 +3,5 @@ import { defaultTheme } from "./defaultTheme";
 import { merge } from "../util";
 
 export function getTheme(): Theme {
-    return merge(defaultTheme(), {
-        window: {
-            focused: {
-                background: "purple",
-            },
-        },
-    });
+    return merge(defaultTheme(), {});
 }
