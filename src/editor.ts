@@ -1,7 +1,15 @@
-import { applyTheme, Color, Colors, Theme } from "./theme";
-import { expectEl, expectEls, merge, RecursivePartial, ValueOf } from "./util";
+import { Context } from "./context";
+import { updateTheme, Color, Colors, Theme } from "./theme";
+import {
+    expectEl,
+    expectEls,
+    merge,
+    RecursivePartial,
+    safeObjectKeys,
+    ValueOf,
+} from "./util";
 
-export function setupEditor(theme: Theme): () => void {
+export function setupEditor(context: Context): () => void {
     const rootEl = expectEl(".desktop");
     const editorEl = expectEl(".editor");
     const editableEls = rootEl.querySelectorAll<HTMLElement>(
@@ -10,92 +18,226 @@ export function setupEditor(theme: Theme): () => void {
 
     const unsubs: (() => void)[] = Array.from(editableEls)
         .map((el) => {
-            return setupElListener(el, editorEl, theme);
+            return setupEditableListener(el, editorEl, context);
         })
         .filter((u) => !!u) as (() => void)[];
 
-    unsubs.push(setupEditorForm(editorEl, theme));
+    unsubs.push(setupEditorForm(editorEl, context));
     unsubs.push(setupEditorControls(editorEl));
 
     return () => unsubs.forEach((unsub) => unsub());
 }
 
-function setupEditorForm(editorEl: HTMLElement, theme: Theme): () => void {
+function setupEditorForm(editorEl: HTMLElement, context: Context): () => void {
+    const unsubs: (() => void)[] = [];
+
     const formEl = expectEl(".editor-form", editorEl);
 
-    const onChange = (_event: Event) => {
-        const dataEditorTarget = formEl.getAttribute("data-editor-target");
+    const inputOnChange = (event: Event) => {
+        if (!event.target) {
+            return;
+        }
 
+        console.log(context.theme);
+
+        const formEl = expectEl(".editor-form", editorEl);
+        const dataEditorTarget = formEl.getAttribute("data-editor-target");
         if (dataEditorTarget === null) {
             return;
         }
-        const validatedThemeKey = getValidThemeKey(theme, dataEditorTarget);
+        const changedTheme = updateThemeColorFromEl(
+            context.theme,
+            event.target as HTMLInputElement,
+            dataEditorTarget,
+        );
+
+        updateTheme(changedTheme);
+    };
+
+    const inputColorEls = expectEls<HTMLInputElement>(
+        `.editor-input input.input--color`,
+        editorEl,
+    );
+    for (const inputColorEl of inputColorEls) {
+        inputColorEl.addEventListener("change", inputOnChange);
+        unsubs.push(() =>
+            inputColorEl.removeEventListener("change", inputOnChange),
+        );
+    }
+
+    const onFormChange = (_event: Event) => {
+        const dataEditorTarget = formEl.getAttribute("data-editor-target");
+        if (dataEditorTarget === null) {
+            return;
+        }
+        const validatedThemeKey = validateThemeKey(
+            context.theme,
+            dataEditorTarget,
+        );
         if (validatedThemeKey === null) {
             return null;
         }
-        const [themePartKey, themeValueKey, currentThemeValue] =
+        const [_themePartKey, _themeValueKey, currentThemeValue] =
             validatedThemeKey;
 
         const targetDataEditor =
             typeof currentThemeValue === "string" ? "color" : "colors";
 
-        const changedTheme: RecursivePartial<Theme> = {};
+        let changedTheme: RecursivePartial<Theme> = {};
 
         const inputColorEls = expectEls<HTMLInputElement>(
             `.editor-input[data-editor="${targetDataEditor}"] input.input--color`,
             editorEl,
         );
         for (const inputColorEl of inputColorEls) {
-            const dataEditorColor =
-                inputColorEl.getAttribute("data-editor-color");
-            if (dataEditorColor === null) {
-                continue;
-            }
-            switch (dataEditorColor) {
-                case "color": {
-                    if (typeof currentThemeValue === "string") {
-                        if (!changedTheme[themePartKey]) {
-                            changedTheme[themePartKey] = {};
-                        }
-                        (changedTheme as any)[themePartKey][themeValueKey] =
-                            inputColorEl.value;
-                    }
-                    break;
-                }
-                case "border":
-                case "background":
-                case "text": {
-                    if (typeof currentThemeValue !== "string") {
-                        if (!changedTheme[themePartKey]) {
-                            changedTheme[themePartKey] = {};
-                        }
-                        if (
-                            !(changedTheme as any)[themePartKey][themeValueKey]
-                        ) {
-                            (changedTheme as any)[themePartKey][themeValueKey] =
-                                {};
-                        }
-                        (changedTheme as any)[themePartKey][themeValueKey][
-                            dataEditorColor
-                        ] = inputColorEl.value;
-                    }
-                    break;
-                }
-            }
+            changedTheme = merge(
+                changedTheme,
+                updateThemeColorFromEl(
+                    context.theme,
+                    inputColorEl,
+                    dataEditorTarget,
+                ),
+            );
         }
 
-        applyTheme(changedTheme);
+        updateTheme(changedTheme);
     };
 
     const onSubmit = (event: Event) => event.preventDefault();
 
     formEl.addEventListener("submit", onSubmit);
-    formEl.addEventListener("change", onChange);
+    unsubs.push(() => formEl.removeEventListener("submit", onSubmit));
 
-    return () => (
-        formEl.removeEventListener("submit", onSubmit),
-        formEl.removeEventListener("change", onChange)
-    );
+    // formEl.addEventListener("change", onFormChange);
+    // unsubs.push(() => formEl.removeEventListener("change", onFormChange));
+
+    return () => unsubs.forEach((unsub) => unsub());
+}
+
+function updateThemeColorFromEl(
+    theme: Theme,
+    inputEl: HTMLInputElement,
+    themeTarget: string,
+): RecursivePartial<Theme> {
+    let changedTheme: RecursivePartial<Theme> = {};
+
+    const validatedThemeKey = validateThemeKey(theme, themeTarget);
+    if (validatedThemeKey === null) {
+        return changedTheme;
+    }
+    const [themePartKey, themeValueKey, currentThemeValue] = validatedThemeKey;
+
+    const editorColorType = inputEl.getAttribute("data-editor-color");
+    if (editorColorType === null) {
+        return changedTheme;
+    }
+    const newColorValue = inputEl.value;
+
+    switch (editorColorType) {
+        case "color": {
+            if (typeof currentThemeValue === "string") {
+                if (!changedTheme[themePartKey]) {
+                    changedTheme[themePartKey] = {};
+                }
+                (changedTheme as any)[themePartKey][themeValueKey] =
+                    newColorValue;
+                changedTheme = merge(
+                    changedTheme,
+                    updateEqualThemeColors(
+                        theme,
+                        currentThemeValue,
+                        newColorValue,
+                    ),
+                );
+            }
+            break;
+        }
+        case "border":
+        case "background":
+        case "text": {
+            if (typeof currentThemeValue !== "string") {
+                if (!changedTheme[themePartKey]) {
+                    changedTheme[themePartKey] = {};
+                }
+                if (!(changedTheme as any)[themePartKey][themeValueKey]) {
+                    (changedTheme as any)[themePartKey][themeValueKey] = {};
+                }
+                (changedTheme as any)[themePartKey][themeValueKey][
+                    editorColorType
+                ] = newColorValue;
+                changedTheme = merge(
+                    changedTheme,
+                    updateEqualThemeColors(
+                        theme,
+                        currentThemeValue[editorColorType],
+                        newColorValue,
+                    ),
+                );
+            }
+            break;
+        }
+    }
+
+    return changedTheme;
+}
+
+function updateEqualThemeColors(
+    theme: Theme,
+    oldColor: Color,
+    newColor: Color,
+): RecursivePartial<Theme> {
+    const updatedTheme: RecursivePartial<Theme> = {};
+
+    for (const themePartKey of safeObjectKeys(theme)) {
+        const themePart = theme[themePartKey];
+        for (const themeValueKey of Object.keys(themePart)) {
+            const themeValue = getThemeValue(
+                theme,
+                themePartKey,
+                themeValueKey,
+            );
+            switch (typeof themeValue) {
+                case "undefined": {
+                    return updatedTheme;
+                }
+                case "string": {
+                    if (themeValue === oldColor) {
+                        if (!updatedTheme[themePartKey]) {
+                            updatedTheme[themePartKey] = {};
+                        }
+                        (updatedTheme as any)[themePartKey][themeValueKey] =
+                            newColor;
+                    }
+                    break;
+                }
+                case "object": {
+                    for (const colorKey of safeObjectKeys(themeValue)) {
+                        const currColor = themeValue[colorKey];
+                        if (currColor !== undefined && currColor === oldColor) {
+                            if (!updatedTheme[themePartKey]) {
+                                updatedTheme[themePartKey] = {};
+                            }
+                            if (
+                                !(updatedTheme as any)[themePartKey][
+                                    themeValueKey
+                                ]
+                            ) {
+                                (updatedTheme as any)[themePartKey][
+                                    themeValueKey
+                                ] = {};
+                            }
+                            (updatedTheme as any)[themePartKey][themeValueKey][
+                                colorKey
+                            ] = newColor;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    return updatedTheme;
 }
 
 function setupEditorControls(editorEl: HTMLElement): () => void {
@@ -110,25 +252,33 @@ function setupEditorControls(editorEl: HTMLElement): () => void {
     return () => document.removeEventListener("keyup", onKey);
 }
 
-function setupElListener(
+function setupEditableListener(
     editableEl: HTMLElement,
     editorEl: HTMLElement,
-    theme: Theme,
+    context: Context,
 ): (() => void) | null {
     const dataTheme = editableEl.getAttribute("data-theme");
     if (dataTheme === null) {
         return null;
     }
-    const validatedThemeKey = getValidThemeKey(theme, dataTheme);
+    const validatedThemeKey = validateThemeKey(context.theme, dataTheme);
     if (validatedThemeKey === null) {
         return null;
     }
-    const [themePartKey, themeValueKey, themeValue] = validatedThemeKey;
+    const [themePartKey, themeValueKey] = validatedThemeKey;
+
+    const unsubs: (() => void)[] = [];
 
     const listener = (event: MouseEvent) => {
         event.stopPropagation();
 
         openEditor(editorEl, event);
+
+        const themeValue = getThemeValue(
+            context.theme,
+            themePartKey,
+            themeValueKey,
+        );
 
         const editorBar = expectEl(".window-bar", editorEl);
         editorBar.innerText = `${themePartKey} ${themeValueKey}`;
@@ -136,6 +286,9 @@ function setupElListener(
         let targetDataEditor: "color" | "colors";
 
         switch (typeof themeValue) {
+            case "undefined": {
+                return;
+            }
             case "string": {
                 targetDataEditor = "color";
                 break;
@@ -185,6 +338,8 @@ function setupElListener(
                     break;
                 }
             }
+
+            // inputColorEl.setAttribute("data-editor-target", dataTheme);
         }
 
         const editorFormEl = expectEl(".editor-form", editorEl);
@@ -192,11 +347,12 @@ function setupElListener(
     };
 
     editableEl.addEventListener("click", listener);
+    unsubs.push(() => editableEl.removeEventListener("click", listener));
 
-    return () => editableEl.removeEventListener("click", listener);
+    return () => unsubs.forEach((unsub) => unsub());
 }
 
-function getValidThemeKey(
+function validateThemeKey(
     theme: Theme,
     s: string,
 ):
@@ -224,6 +380,14 @@ function getValidThemeKey(
         themeValueKey as keyof ValueOf<Theme>,
         themeValue,
     ];
+}
+
+function getThemeValue(
+    theme: Theme,
+    themePartKey: keyof Theme,
+    themeValueKey: string,
+): Color | Colors | undefined {
+    return (theme as any)[themePartKey][themeValueKey];
 }
 
 const OPEN_EDITOR_URGENT_TIMEOUT_MS = 500;
