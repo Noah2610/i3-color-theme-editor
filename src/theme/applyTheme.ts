@@ -1,24 +1,28 @@
 import { Colors, Theme } from "./types";
-import { expectEl, safeObjectKeys } from "../util";
+import { expectEl, RecursivePartial, safeObjectKeys } from "../util";
 
-export function applyTheme(theme: Theme) {
+export function applyTheme(theme: RecursivePartial<Theme>) {
     const el = expectEl(".theme");
 
     applyBarTheme(el, theme);
     applyWindowTheme(el, theme);
 }
 
-function applyBarTheme(el: HTMLElement, theme: Theme) {
-    applyThemeObj(el, theme.bar, "theme-bar");
+function applyBarTheme(el: HTMLElement, theme: RecursivePartial<Theme>) {
+    if (theme.bar) {
+        applyThemeObj(el, theme.bar, "theme-bar");
+    }
 }
 
-function applyWindowTheme(el: HTMLElement, theme: Theme) {
-    applyThemeObj(el, theme.window, "theme-window");
+function applyWindowTheme(el: HTMLElement, theme: RecursivePartial<Theme>) {
+    if (theme.window) {
+        applyThemeObj(el, theme.window, "theme-window");
+    }
 }
 
-function applyThemeObj<T extends Theme["bar"] | Theme["window"]>(
+function applyThemeObj(
     el: HTMLElement,
-    theme: T,
+    theme: RecursivePartial<Theme["bar"] | Theme["window"]>,
     prefix: string,
 ) {
     const setCssVariable = createSetCssVariable(el, prefix);
@@ -39,7 +43,11 @@ function createSetCssVariable(el: HTMLElement, prefix = "theme") {
         el.style.setProperty(`--${prefix}-${variable}`, value);
 }
 
-function applyColors(el: HTMLElement, prefix: string, colors: Colors) {
+function applyColors(
+    el: HTMLElement,
+    prefix: string,
+    colors: RecursivePartial<Colors>,
+) {
     const setCssVariable = createSetCssVariable(el, prefix);
 
     for (const colorKey of safeObjectKeys(colors)) {
