@@ -22,9 +22,7 @@ export function setupEditor(theme: Theme): () => void {
 function setupEditorForm(editorEl: HTMLElement, theme: Theme): () => void {
     const formEl = expectEl(".editor-form", editorEl);
 
-    const onSubmit = (event: Event) => {
-        event.preventDefault();
-
+    const onChange = (_event: Event) => {
         const dataEditorTarget = formEl.getAttribute("data-editor-target");
 
         if (dataEditorTarget === null) {
@@ -88,9 +86,15 @@ function setupEditorForm(editorEl: HTMLElement, theme: Theme): () => void {
         applyTheme(changedTheme);
     };
 
-    formEl.addEventListener("submit", onSubmit);
+    const onSubmit = (event: Event) => event.preventDefault();
 
-    return () => formEl.removeEventListener("submit", onSubmit);
+    formEl.addEventListener("submit", onSubmit);
+    formEl.addEventListener("change", onChange);
+
+    return () => (
+        formEl.removeEventListener("submit", onSubmit),
+        formEl.removeEventListener("change", onChange)
+    );
 }
 
 function setupElListener(
