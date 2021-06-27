@@ -1,14 +1,14 @@
 import { Color, Colors, Theme } from "./theme";
-import { expectEl, merge, RecursivePartial, ValueOf } from "./util";
+import { expectEl, expectEls, merge, RecursivePartial, ValueOf } from "./util";
 
 export function setupEditor(theme: Theme): () => void {
     const rootEl = expectEl(".desktop");
-    const menuEl = expectEl(".menu");
-    const editorEls = rootEl.querySelectorAll<HTMLElement>(
+    const editorEl = expectEl(".editor");
+    const editableEls = rootEl.querySelectorAll<HTMLElement>(
         "[data-theme]:not(.--noedit)",
     );
 
-    const unsubs: (() => void)[] = Array.from(editorEls)
+    const unsubs: (() => void)[] = Array.from(editableEls)
         .map((el) => {
             const dataTheme = el.getAttribute("data-theme");
 
@@ -22,84 +22,99 @@ export function setupEditor(theme: Theme): () => void {
                 return null;
             }
 
-            return setupElListener(el, menuEl, theme, themePartKey, themeKey);
+            return setupElListener(el, editorEl, theme, themePartKey, themeKey);
         })
         .filter((u) => !!u) as (() => void)[];
 
-    return () => {};
+    return () => unsubs.forEach((unsub) => unsub());
 }
 
 function setupElListener(
-    el: HTMLElement,
-    menuEl: HTMLElement,
+    editableEl: HTMLElement,
+    editorEl: HTMLElement,
     theme: Theme,
     themePartKey: string,
     themeKey: string,
 ): (() => void) | null {
-    if (!themePartKey || !themeKey || !(themePartKey in theme)) {
+    if (
+        !themePartKey ||
+        !themeKey ||
+        !(themePartKey in theme) ||
+        !(theme as any)[themePartKey] ||
+        !(themeKey in (theme as any)[themePartKey]) ||
+        !(theme as any)[themePartKey][themeKey]
+    ) {
         return null;
     }
 
-    // let isOpen = false;
-
     const listener = (event: MouseEvent) => {
-        // if (isOpen) {
-        //     isOpen = false;
-        //     // closeMenu(menuEl);
-        // } else {
-        //     isOpen = true;
-        openMenu(menuEl, event);
-        // }
+        event.stopPropagation();
 
         const themePart = theme[themePartKey as keyof Theme];
-
-        if (!themePart || !(themeKey in (theme as any)[themePartKey])) {
-            return null;
-        }
 
         const themeValue = (themePart as any)[themeKey] as
             | undefined
             | Color
             | Colors;
 
+        if (themeValue === undefined) {
+            return;
+        }
+
+        openEditor(editorEl, event);
+
+        const editorBar = expectEl(".window-bar", editorEl);
+        editorBar.innerText = `${themePartKey} ${themeKey}`;
+
         const setTheme = (newTheme: RecursivePartial<Theme>) =>
             merge(theme, newTheme);
 
-        console.log("------------------");
-        console.log(el, themeValue);
+        let targetDataEditor: "color" | "colors";
 
         switch (typeof themeValue) {
-            case "undefined": {
-                return null;
-            }
             case "string": {
-                return null;
+                targetDataEditor = "color";
+                break;
             }
             case "object": {
-                return () => {};
+                targetDataEditor = "colors";
+                break;
+            }
+        }
+
+        const editorInputEls = expectEls(".editor-input", editorEl);
+        for (const editorEl of editorInputEls) {
+            const dataEditor = editorEl.getAttribute("data-editor");
+            if (dataEditor === null) {
+                continue;
+            }
+            if (dataEditor === targetDataEditor) {
+                editorEl.classList.remove("--hidden");
+            } else {
+                editorEl.classList.add("--hidden");
             }
         }
     };
 
-    el.addEventListener("click", listener);
+    editableEl.addEventListener("click", listener);
 
-    return () => el.removeEventListener("click", listener);
+    return () => editableEl.removeEventListener("click", listener);
 }
 
-function openMenu(menuEl: HTMLElement, event: MouseEvent) {
+function openEditor(editorEl: HTMLElement, event: MouseEvent) {
     const mousePos = {
         x: event.pageX,
         y: event.pageY,
     };
 
-    menuEl.style.left = `${mousePos.x}px`;
-    menuEl.style.top = `${mousePos.y}px`;
+    editorEl.style.left = `${mousePos.x}px`;
+    editorEl.style.top = `${mousePos.y}px`;
 
-    menuEl.classList.add("--open");
+    editorEl.classList.add("--open");
 }
 
-function closeMenu(menuEl: HTMLElement) {
-    menuEl.classList.remove("--open");
+function closeEditor(editorEl: HTMLElement) {
+    editorEl.classList.remove("--open");
 }
 
 function setupColorListener(
