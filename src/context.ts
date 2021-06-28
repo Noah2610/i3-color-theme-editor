@@ -1,7 +1,7 @@
 import { setupDraggable } from "./draggable";
 import { setupEditor } from "./editor";
 import { setupExport } from "./export";
-import { applyTheme, newTheme, Theme } from "./theme";
+import { newTheme, Theme, updateTheme } from "./theme";
 import { setupTime } from "./time";
 import { createUnsubs } from "./util";
 
@@ -24,14 +24,14 @@ export function setupContext(): Context {
     const theme = newTheme();
     const context: Context = { theme };
 
-    applyTheme(context.theme);
+    windowWithContext.APP_CONTEXT = context;
 
     unsubs.add(setupExport(context));
     unsubs.add(setupEditor(context));
 
     window.onunload = unsubs.unsubAll;
 
-    windowWithContext.APP_CONTEXT = context;
+    updateTheme(context.theme);
 
     return context;
 }

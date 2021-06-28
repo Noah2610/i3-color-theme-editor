@@ -10,23 +10,27 @@ import {
 export function setupExport(context: Context): () => void {
     const unsubs = createUnsubs();
 
-    const btnEl = expectEl(".export .export__button");
+    const btnEl = document.querySelector<HTMLElement>(
+        ".export .export__button",
+    );
 
-    const onClick = (_event: Event) => {
-        const outputEl = expectEl<HTMLTextAreaElement>(
-            ".export .export__config",
-        );
+    if (btnEl) {
+        const onClick = (_event: Event) => exportConfig(context);
 
-        const config = getThemeConfig(context.theme);
-        const configDisplay = getThemeConfigDisplay(config);
-
-        outputEl.value = configDisplay;
-    };
-
-    btnEl.addEventListener("click", onClick);
-    unsubs.add(() => btnEl.removeEventListener("click", onClick));
+        btnEl.addEventListener("click", onClick);
+        unsubs.add(() => btnEl.removeEventListener("click", onClick));
+    }
 
     return unsubs.unsubAll;
+}
+
+export function exportConfig(context: Context) {
+    const outputEl = expectEl<HTMLTextAreaElement>(".export .export__config");
+
+    const config = getThemeConfig(context.theme);
+    const configDisplay = getThemeConfigDisplay(config);
+
+    outputEl.value = configDisplay;
 }
 
 interface ThemeConfig {
