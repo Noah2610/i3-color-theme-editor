@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="./css/workspace.css" />
         <link rel="stylesheet" href="./css/window.css" />
         <link rel="stylesheet" href="./css/editor.css" />
+        <link rel="stylesheet" href="./css/draggable.css" />
     </head>
     <body>
         <main class="theme">
@@ -148,10 +149,10 @@
 
             <!-- {{{ EDITOR -->
             <div
-                class="editor window --focused --noedit"
+                class="editor window --focused --noedit draggable"
                 data-theme="window.focused"
             >
-                <div class="window-bar"></div>
+                <div class="window-bar draggable__handle"></div>
                 <div class="editor-body window-body --no-placeholder">
                     <form action="#" class="editor-form" data-editor-target="">
                         <div class="editor-input --hidden" data-editor="color">

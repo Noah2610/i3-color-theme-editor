@@ -1,0 +1,15 @@
+.draggable {
+    position: fixed;
+}
+
+.draggable .draggable__handle {
+    user-select: none;
+}
+
+.draggable:not(.--dragging) .draggable__handle {
+    cursor: grab;
+}
+
+.draggable.--dragging .draggable__handle {
+    cursor: grabbing;
+}

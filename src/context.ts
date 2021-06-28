@@ -1,3 +1,4 @@
+import { setupDraggable } from "./draggable";
 import { setupEditor } from "./editor";
 import { applyTheme, newTheme, Theme } from "./theme";
 import { setupTime } from "./time";
@@ -17,6 +18,7 @@ export function setupContext(): Context {
     const unsubs = createUnsubs();
 
     unsubs.add(setupTime());
+    unsubs.add(setupDraggable());
 
     const theme = newTheme();
     const context: Context = { theme };
