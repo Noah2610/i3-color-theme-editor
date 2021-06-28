@@ -6,6 +6,7 @@ import {
     validateThemeKey,
 } from "../util";
 import { Context } from "../context";
+import { updateEditor } from "./updateEditor";
 
 export function setupEditorOpen(
     context: Context,
@@ -32,89 +33,21 @@ function setupEditableListener(
     if (dataTheme === null) {
         return null;
     }
-    const validatedThemeKey = validateThemeKey(context.theme, dataTheme);
-    if (validatedThemeKey === null) {
+    if (!validateThemeKey(context.theme, dataTheme)) {
         return null;
     }
-    const [themePartKey, themeValueKey] = validatedThemeKey;
 
     const unsubs: (() => void)[] = [];
 
     const listener = (event: MouseEvent) => {
         event.stopPropagation();
 
-        openEditor(editorEl, event);
-
-        const themeValue = getThemeValue(
-            context.theme,
-            themePartKey,
-            themeValueKey,
-        );
-
-        const editorBar = expectEl(".window-bar", editorEl);
-        editorBar.innerText = `${themePartKey} ${themeValueKey}`;
-
-        let targetDataEditor: "color" | "colors";
-
-        switch (typeof themeValue) {
-            case "undefined": {
-                return;
-            }
-            case "string": {
-                targetDataEditor = "color";
-                break;
-            }
-            case "object": {
-                targetDataEditor = "colors";
-                break;
-            }
-        }
-
-        const editorInputEls = expectEls(".editor-input", editorEl);
-        for (const editorEl of editorInputEls) {
-            const dataEditor = editorEl.getAttribute("data-editor");
-            if (dataEditor === null) {
-                continue;
-            }
-            if (dataEditor === targetDataEditor) {
-                editorEl.classList.remove("--hidden");
-            } else {
-                editorEl.classList.add("--hidden");
-            }
-        }
-
-        const inputColorEls = expectEls<HTMLInputElement>(
-            `.editor-input[data-editor="${targetDataEditor}"] input.input--color`,
-            editorEl,
-        );
-        for (const inputColorEl of inputColorEls) {
-            const dataEditorColor =
-                inputColorEl.getAttribute("data-editor-color");
-            if (dataEditorColor === null) {
-                continue;
-            }
-            switch (dataEditorColor) {
-                case "color": {
-                    if (typeof themeValue === "string") {
-                        inputColorEl.value = themeValue;
-                    }
-                    break;
-                }
-                case "border":
-                case "background":
-                case "text": {
-                    if (typeof themeValue !== "string") {
-                        inputColorEl.value = themeValue[dataEditorColor];
-                    }
-                    break;
-                }
-            }
-
-            // inputColorEl.setAttribute("data-editor-target", dataTheme);
-        }
-
         const editorFormEl = expectEl(".editor-form", editorEl);
         editorFormEl.setAttribute("data-editor-target", dataTheme);
+
+        openEditor(editorEl, event);
+
+        updateEditor(context.theme, editorEl);
     };
 
     editableEl.addEventListener("click", listener);

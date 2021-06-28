@@ -1,8 +1,8 @@
 import { expectEl, expectEls, validateThemeKey } from "../util";
 import { Theme } from "../theme";
 
-export function updateEditor(theme: Theme) {
-    const editorEl = expectEl(".editor");
+export function updateEditor(theme: Theme, editorEl: HTMLElement | undefined) {
+    editorEl = editorEl || expectEl(".editor");
     const formEl = expectEl(".editor-form", editorEl);
 
     if (!editorEl.classList.contains("--open")) {
@@ -18,10 +18,42 @@ export function updateEditor(theme: Theme) {
     if (!validatedKey) {
         return;
     }
-    const [_themePartKey, _themeValueKey, themeValue] = validatedKey;
+    const [themePartKey, themeValueKey, themeValue] = validatedKey;
+
+    let targetDataEditor: "color" | "colors";
+
+    switch (typeof themeValue) {
+        case "undefined": {
+            return;
+        }
+        case "string": {
+            targetDataEditor = "color";
+            break;
+        }
+        case "object": {
+            targetDataEditor = "colors";
+            break;
+        }
+    }
+
+    const editorBar = expectEl(".window-bar", editorEl);
+    editorBar.innerText = `${themePartKey} ${themeValueKey}`;
+
+    const editorInputEls = expectEls(".editor-input", editorEl);
+    for (const editorEl of editorInputEls) {
+        const dataEditor = editorEl.getAttribute("data-editor");
+        if (dataEditor === null) {
+            continue;
+        }
+        if (dataEditor === targetDataEditor) {
+            editorEl.classList.remove("--hidden");
+        } else {
+            editorEl.classList.add("--hidden");
+        }
+    }
 
     const inputEls = expectEls<HTMLInputElement>(
-        "input.input--color",
+        ".editor-input input.input--color",
         editorEl,
     );
     for (const inputEl of inputEls) {
@@ -50,5 +82,7 @@ export function updateEditor(theme: Theme) {
         ) {
             inputElDisplay.innerHTML = inputEl.value;
         }
+
+        // inputEl.setAttribute("data-editor-target", dataEditorTarget);
     }
 }
