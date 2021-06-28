@@ -1,0 +1,17 @@
+.export {
+    display: flex;
+    flex-direction: column;
+    grid-gap: 1em;
+    padding: 1em;
+}
+
+.export .export__button {
+    flex-grow: 0;
+    flex-shrink: 0;
+    max-width: 8em;
+}
+
+.export .export__config {
+    flex-grow: 1;
+    flex-shrink: 1;
+}

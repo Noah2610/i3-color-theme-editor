@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="./css/window.css" />
         <link rel="stylesheet" href="./css/editor.css" />
         <link rel="stylesheet" href="./css/draggable.css" />
+        <link rel="stylesheet" href="./css/export.css" />
     </head>
     <body>
         <main class="theme">
@@ -137,12 +138,24 @@
                                 data-theme="window.placeholder"
                             ></div>
                         </div>
-                        <div class="window --urgent" data-theme="window.urgent">
-                            <div class="window-bar">Window Four!</div>
+                        <div class="window --urgent">
+                            <div class="window-bar" data-theme="window.urgent">
+                                Window Four!
+                            </div>
                             <div
-                                class="window-body"
+                                class="
+                                    window-body
+                                    --no-placeholder
+                                    --noedit
+                                    export
+                                "
                                 data-theme="window.placeholder"
-                            ></div>
+                            >
+                                <button class="export__button">
+                                    Export Config
+                                </button>
+                                <textarea class="export__config"></textarea>
+                            </div>
                         </div>
                     </div>
                     <!-- }}} -->
