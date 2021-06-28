@@ -1,26 +1,24 @@
 .windows {
     position: relative;
+    display: flex;
+    justify-content: stretch;
     width: 100%;
     height: 100%;
-    display: flex;
-    justify-content: space-between;
 
     background-color: var(--theme-window-background);
 }
 
 .window {
     position: relative;
-    flex-grow: 1;
-    flex-shrink: 1;
     display: flex;
     flex-direction: column;
+    width: 100%;
+    height: 100%;
 }
 
 .window-bar {
     width: 100%;
     height: 2em;
-    flex-grow: 0;
-    flex-shrink: 0;
     padding-left: 1em;
 
     display: flex;
@@ -54,8 +52,8 @@
 
 .window-body {
     position: relative;
-    flex-grow: 1;
-    flex-shrink: 1;
+    width: 100%;
+    height: 100%;
     border: solid var(--config-window-border-width);
     box-sizing: border-box;
 

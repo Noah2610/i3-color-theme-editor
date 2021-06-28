@@ -4,6 +4,8 @@
     z-index: -1;
     pointer-events: none;
 
+    width: auto;
+    height: auto;
     min-width: 20em;
     min-height: 10em;
 
