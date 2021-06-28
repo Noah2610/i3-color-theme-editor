@@ -1,7 +1,7 @@
 import { expectEl, expectEls, validateThemeKey } from "../util";
 import { Theme } from "../theme";
 
-export function updateEditor(theme: Theme, editorEl: HTMLElement | undefined) {
+export function updateEditor(theme: Theme, editorEl?: HTMLElement) {
     editorEl = editorEl || expectEl(".editor");
     const formEl = expectEl(".editor-form", editorEl);
 
