@@ -1,17 +1,11 @@
 import { Context } from "../context";
-import { updateTheme, Color, Colors, Theme } from "../theme";
-import {
-    expectEl,
-    expectEls,
-    merge,
-    RecursivePartial,
-    safeObjectKeys,
-    ValueOf,
-} from "../util";
+import { expectEl } from "../util";
 
 import { setupEditorOpen } from "./setupEditorOpen";
 import { setupEditorInput } from "./setupEditorInput";
 import { setupEditorControls } from "./setupEditorControls";
+
+export { updateEditor } from "./updateEditor";
 
 export function setupEditor(context: Context): () => void {
     const desktopEl = expectEl(".desktop");

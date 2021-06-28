@@ -48,7 +48,7 @@ export function setupEditorInput(
         );
     }
 
-    const onFormChange = (_event: Event) => {
+    const formOnChange = (_event: Event) => {
         const dataEditorTarget = formEl.getAttribute("data-editor-target");
         if (dataEditorTarget === null) {
             return;
@@ -91,8 +91,8 @@ export function setupEditorInput(
     formEl.addEventListener("submit", onSubmit);
     unsubs.push(() => formEl.removeEventListener("submit", onSubmit));
 
-    // formEl.addEventListener("change", onFormChange);
-    // unsubs.push(() => formEl.removeEventListener("change", onFormChange));
+    // formEl.addEventListener("change", formOnChange);
+    // unsubs.push(() => formEl.removeEventListener("change", formOnChange));
 
     return () => unsubs.forEach((unsub) => unsub());
 }
