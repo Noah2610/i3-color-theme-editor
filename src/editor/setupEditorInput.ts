@@ -26,10 +26,18 @@ export function setupEditorInput(
         if (dataEditorTarget === null) {
             return;
         }
+
+        const checkboxEl = expectEl<HTMLInputElement>(
+            "input#input-editor-equal-colors",
+            editorEl,
+        );
+        const shouldUpdateEqualColors = checkboxEl.checked;
+
         const changedTheme = updateThemeColorFromEl(
             context.theme,
             event.target as HTMLInputElement,
             dataEditorTarget,
+            { shouldUpdateEqualColors },
         );
 
         updateTheme(changedTheme);
@@ -101,6 +109,7 @@ function updateThemeColorFromEl(
     theme: Theme,
     inputEl: HTMLInputElement,
     themeTarget: string,
+    { shouldUpdateEqualColors } = { shouldUpdateEqualColors: false },
 ): RecursivePartial<Theme> {
     let changedTheme: RecursivePartial<Theme> = {};
 
@@ -124,14 +133,16 @@ function updateThemeColorFromEl(
                 }
                 (changedTheme as any)[themePartKey][themeValueKey] =
                     newColorValue;
-                changedTheme = merge(
-                    changedTheme,
-                    updateEqualThemeColors(
-                        theme,
-                        currentThemeValue,
-                        newColorValue,
-                    ),
-                );
+                if (shouldUpdateEqualColors) {
+                    changedTheme = merge(
+                        changedTheme,
+                        updateEqualThemeColors(
+                            theme,
+                            currentThemeValue,
+                            newColorValue,
+                        ),
+                    );
+                }
             }
             break;
         }
@@ -148,14 +159,16 @@ function updateThemeColorFromEl(
                 (changedTheme as any)[themePartKey][themeValueKey][
                     editorColorType
                 ] = newColorValue;
-                changedTheme = merge(
-                    changedTheme,
-                    updateEqualThemeColors(
-                        theme,
-                        currentThemeValue[editorColorType],
-                        newColorValue,
-                    ),
-                );
+                if (shouldUpdateEqualColors) {
+                    changedTheme = merge(
+                        changedTheme,
+                        updateEqualThemeColors(
+                            theme,
+                            currentThemeValue[editorColorType],
+                            newColorValue,
+                        ),
+                    );
+                }
             }
             break;
         }
