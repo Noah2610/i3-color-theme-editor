@@ -4,4 +4,5 @@ export * from "./merge";
 export * from "./recursivePartial";
 export * from "./safeObjectKeys";
 export * from "./themeHelpers";
+export * from "./unsubs";
 export * from "./valueOf";

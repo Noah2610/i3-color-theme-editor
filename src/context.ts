@@ -1,6 +1,7 @@
 import { setupEditor } from "./editor";
 import { applyTheme, newTheme, Theme } from "./theme";
 import { setupTime } from "./time";
+import { createUnsubs } from "./util";
 
 export type WindowWithContext = Window & {
     APP_CONTEXT?: Context;
@@ -13,19 +14,18 @@ export interface Context {
 }
 
 export function setupContext(): Context {
-    const cleanups: (() => void)[] = [];
+    const unsubs = createUnsubs();
 
-    cleanups.push(setupTime());
+    unsubs.add(setupTime());
 
     const theme = newTheme();
     const context: Context = { theme };
 
     applyTheme(context.theme);
 
-    cleanups.push(setupEditor(context));
+    unsubs.add(setupEditor(context));
 
-    const cleanup = () => cleanups.forEach((cb) => cb());
-    window.onunload = cleanup;
+    window.onunload = unsubs.unsubAll;
 
     windowWithContext.APP_CONTEXT = context;
 
