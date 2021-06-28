@@ -16,8 +16,6 @@ export function setupEditorInput(
 ): () => void {
     const unsubs: (() => void)[] = [];
 
-    const formEl = expectEl(".editor-form", editorEl);
-
     const inputOnChange = (event: Event) => {
         if (!event.target) {
             return;
@@ -37,62 +35,64 @@ export function setupEditorInput(
         updateTheme(changedTheme);
     };
 
-    const inputColorEls = expectEls<HTMLInputElement>(
+    const inputEls = expectEls<HTMLInputElement>(
         `.editor-input input.input--color`,
         editorEl,
     );
-    for (const inputColorEl of inputColorEls) {
-        inputColorEl.addEventListener("change", inputOnChange);
-        unsubs.push(() =>
-            inputColorEl.removeEventListener("change", inputOnChange),
-        );
+    for (const inputEl of inputEls) {
+        inputEl.addEventListener("change", inputOnChange);
+        unsubs.push(() => inputEl.removeEventListener("change", inputOnChange));
     }
 
-    const formOnChange = (_event: Event) => {
-        const dataEditorTarget = formEl.getAttribute("data-editor-target");
-        if (dataEditorTarget === null) {
-            return;
-        }
-        const validatedThemeKey = validateThemeKey(
-            context.theme,
-            dataEditorTarget,
-        );
-        if (validatedThemeKey === null) {
-            return null;
-        }
-        const [_themePartKey, _themeValueKey, currentThemeValue] =
-            validatedThemeKey;
+    const formEl = expectEl(".editor-form", editorEl);
 
-        const targetDataEditor =
-            typeof currentThemeValue === "string" ? "color" : "colors";
+    const onFormSubmit = (event: Event) => event.preventDefault();
 
-        let changedTheme: RecursivePartial<Theme> = {};
+    formEl.addEventListener("submit", onFormSubmit);
+    unsubs.push(() => formEl.removeEventListener("submit", onFormSubmit));
 
-        const inputColorEls = expectEls<HTMLInputElement>(
-            `.editor-input[data-editor="${targetDataEditor}"] input.input--color`,
-            editorEl,
-        );
-        for (const inputColorEl of inputColorEls) {
-            changedTheme = merge(
-                changedTheme,
-                updateThemeColorFromEl(
-                    context.theme,
-                    inputColorEl,
-                    dataEditorTarget,
-                ),
-            );
-        }
+    // {{{ FORM ON CHANGE
+    // const formOnChange = (_event: Event) => {
+    //     const dataEditorTarget = formEl.getAttribute("data-editor-target");
+    //     if (dataEditorTarget === null) {
+    //         return;
+    //     }
+    //     const validatedThemeKey = validateThemeKey(
+    //         context.theme,
+    //         dataEditorTarget,
+    //     );
+    //     if (validatedThemeKey === null) {
+    //         return null;
+    //     }
+    //     const [_themePartKey, _themeValueKey, currentThemeValue] =
+    //         validatedThemeKey;
 
-        updateTheme(changedTheme);
-    };
+    //     const targetDataEditor =
+    //         typeof currentThemeValue === "string" ? "color" : "colors";
 
-    const onSubmit = (event: Event) => event.preventDefault();
+    //     let changedTheme: RecursivePartial<Theme> = {};
 
-    formEl.addEventListener("submit", onSubmit);
-    unsubs.push(() => formEl.removeEventListener("submit", onSubmit));
+    //     const inputColorEls = expectEls<HTMLInputElement>(
+    //         `.editor-input[data-editor="${targetDataEditor}"] input.input--color`,
+    //         editorEl,
+    //     );
+    //     for (const inputColorEl of inputColorEls) {
+    //         changedTheme = merge(
+    //             changedTheme,
+    //             updateThemeColorFromEl(
+    //                 context.theme,
+    //                 inputColorEl,
+    //                 dataEditorTarget,
+    //             ),
+    //         );
+    //     }
+
+    //     updateTheme(changedTheme);
+    // };
 
     // formEl.addEventListener("change", formOnChange);
     // unsubs.push(() => formEl.removeEventListener("change", formOnChange));
+    // }}}
 
     return () => unsubs.forEach((unsub) => unsub());
 }
