@@ -31,6 +31,8 @@
     text-decoration: underline;
 }
 
-.editor .editor-form .editor-form__submit {
-    margin-top: 1em;
+.editor .editor-form {
+    display: flex;
+    flex-direction: column;
+    grid-gap: 1em;
 }
