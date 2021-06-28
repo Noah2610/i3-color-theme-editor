@@ -42,5 +42,13 @@ export function updateEditor(theme: Theme) {
                 break;
             }
         }
+
+        const inputElDisplay = inputEl.previousElementSibling;
+        if (
+            inputElDisplay &&
+            inputElDisplay.classList.contains("input-color-display")
+        ) {
+            inputElDisplay.innerHTML = inputEl.value;
+        }
     }
 }

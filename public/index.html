@@ -16,6 +16,7 @@
             <div class="desktop">
                 <div class="desktop-bar" data-theme="bar.focused_background">
                     <div class="desktop-bar__workspaces">
+                        <!-- {{{ WORKSPACES -->
                         <div class="workspaces">
                             <div
                                 class="workspace --focused"
@@ -78,6 +79,7 @@
                                 10
                             </div>
                         </div>
+                        <!-- }}} -->
                     </div>
 
                     <div
@@ -94,6 +96,7 @@
                 </div>
 
                 <div class="desktop-body">
+                    <!-- {{{ WINDOWS -->
                     <div
                         class="windows --noedit"
                         data-theme="window.background"
@@ -127,9 +130,11 @@
                             <div class="window-body"></div>
                         </div>
                     </div>
+                    <!-- }}} -->
                 </div>
             </div>
 
+            <!-- {{{ EDITOR -->
             <div
                 class="editor window --focused --noedit"
                 data-theme="window.focused"
@@ -141,6 +146,7 @@
                             <label for="input-color" class="input-color-label">
                                 Color
                             </label>
+                            <div class="input-color-display"></div>
                             <input
                                 name="input-color"
                                 id="input-color"
@@ -156,6 +162,7 @@
                             >
                                 Border
                             </label>
+                            <div class="input-color-display"></div>
                             <input
                                 name="input-colors-border"
                                 id="input-colors-border"
@@ -169,6 +176,7 @@
                             >
                                 Background
                             </label>
+                            <div class="input-color-display"></div>
                             <input
                                 name="input-colors-background"
                                 id="input-colors-background"
@@ -182,6 +190,7 @@
                             >
                                 Text
                             </label>
+                            <div class="input-color-display"></div>
                             <input
                                 name="input-colors-text"
                                 id="input-colors-text"
@@ -213,6 +222,7 @@
                     </form>
                 </div>
             </div>
+            <!-- }}} -->
         </main>
 
         <script type="text/javascript" src="./bundle.js"></script>
