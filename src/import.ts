@@ -76,13 +76,14 @@ function parseConfig(configRaw: string): RecursivePartial<Theme> | null {
     const reBlockStart = /{\s*$/;
     const reBlockEnd = /^\s*}/;
     let blocks: string[] = [];
+    const vars: Record<string, string> = {};
 
     for (const line of lines) {
         if (!line) {
             continue;
         }
 
-        const [cmd, ...args] = line.split(" ");
+        const [cmd, ...args] = line.split(/\s+/);
 
         if (!cmd) {
             continue;
@@ -94,11 +95,28 @@ function parseConfig(configRaw: string): RecursivePartial<Theme> | null {
             blocks.pop();
         }
 
+        if (cmd === "set") {
+            const varPair = parseVar(args);
+
+            if (!varPair) {
+                console.error(
+                    `[import] Failed parsing variable declaration "${args.join(
+                        " ",
+                    )}" for "${cmd}" command`,
+                );
+                continue;
+            }
+
+            vars[varPair[0]] = varPair[1];
+
+            continue;
+        }
+
         if (blocks.length === 0 && isThemeCmdWindow(cmd)) {
             const value =
                 cmd === "client.background"
-                    ? parseColor(args)
-                    : parseWindowColors(args);
+                    ? parseColor(args, vars)
+                    : parseWindowColors(args, vars);
 
             if (!value) {
                 console.error(
@@ -126,8 +144,8 @@ function parseConfig(configRaw: string): RecursivePartial<Theme> | null {
             const value = ["background", "statusline", "separator"].includes(
                 cmd,
             )
-                ? parseColor(args)
-                : parseBarColors(args);
+                ? parseColor(args, vars)
+                : parseBarColors(args, vars);
 
             if (!value) {
                 console.error(
@@ -148,15 +166,26 @@ function parseConfig(configRaw: string): RecursivePartial<Theme> | null {
         }
     }
 
+    console.log(vars);
+
     return config;
 }
 
-function parseColor(args: string | string[]): Color | null {
-    const s = Array.isArray(args) ? findFirstPresentString(args) : args;
-    if (!s) {
+function parseColor(
+    args: string | string[],
+    vars?: Record<string, string>,
+): Color | null {
+    let val = Array.isArray(args) ? findFirstPresentString(args) : args;
+
+    if (!val) {
         return null;
     }
-    const parsed = s.match(/^\s*(#[\dA-Fa-f]{6})\s*$/);
+
+    if (vars && val.match(/^\s*\$/)) {
+        val = vars[val.trim()] || val;
+    }
+
+    const parsed = val.match(/^\s*["']?(#[\dA-Fa-f]{6})["']?\s*$/);
     if (parsed && parsed[1]) {
         return parsed[1];
     } else {
@@ -172,13 +201,16 @@ function isStringPresent(s: string): boolean {
     return !!s.trim();
 }
 
-function parseWindowColors(args: string[]): WindowColors | null {
+function parseWindowColors(
+    args: string[],
+    vars?: Record<string, string>,
+): WindowColors | null {
     const colors: Partial<WindowColors> = {
-        border: (args[0] && parseColor(args[0])) || undefined,
-        background: (args[1] && parseColor(args[1])) || undefined,
-        text: (args[2] && parseColor(args[2])) || undefined,
-        indicator: (args[3] && parseColor(args[3])) || undefined,
-        child_border: (args[4] && parseColor(args[4])) || undefined,
+        border: (args[0] && parseColor(args[0], vars)) || undefined,
+        background: (args[1] && parseColor(args[1], vars)) || undefined,
+        text: (args[2] && parseColor(args[2], vars)) || undefined,
+        indicator: (args[3] && parseColor(args[3], vars)) || "",
+        child_border: (args[4] && parseColor(args[4], vars)) || "",
     };
     if (isValidColors(colors)) {
         return colors;
@@ -187,11 +219,14 @@ function parseWindowColors(args: string[]): WindowColors | null {
     }
 }
 
-function parseBarColors(args: string[]): BarColors | null {
+function parseBarColors(
+    args: string[],
+    vars?: Record<string, string>,
+): BarColors | null {
     const colors: Partial<BarColors> = {
-        border: (args[0] && parseColor(args[0])) || undefined,
-        background: (args[1] && parseColor(args[1])) || undefined,
-        text: (args[2] && parseColor(args[2])) || undefined,
+        border: (args[0] && parseColor(args[0], vars)) || undefined,
+        background: (args[1] && parseColor(args[1], vars)) || undefined,
+        text: (args[2] && parseColor(args[2], vars)) || undefined,
     };
     if (isValidColors(colors)) {
         return colors;
@@ -201,5 +236,17 @@ function parseBarColors(args: string[]): BarColors | null {
 }
 
 function isValidColors<C extends Colors>(part: Partial<C>): part is C {
-    return Object.values(part).every((val) => !!val);
+    return Object.values(part).every(
+        (val) => val !== undefined && val !== null,
+    );
+}
+
+function parseVar(args: string[]): [string, string] | null {
+    const name = args[0];
+    const val = args[1];
+    if (name && val) {
+        return [name.trim(), val.trim()];
+    } else {
+        return null;
+    }
 }
