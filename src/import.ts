@@ -166,8 +166,6 @@ function parseConfig(configRaw: string): RecursivePartial<Theme> | null {
         }
     }
 
-    console.log(vars);
-
     return config;
 }
 
