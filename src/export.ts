@@ -120,7 +120,7 @@ function getThemeConfigDisplay(config: ThemeConfig): string {
                     const nestedItems = getDisplayOf(val);
                     items.push(
                         `${key} {`,
-                        ...nestedItems.map((i) => `${PADDING} ${i}`),
+                        ...nestedItems.map((i) => `${PADDING}${i}`),
                         "}",
                     );
                     break;

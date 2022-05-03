@@ -48,8 +48,6 @@ export interface BarTheme {
      */
     active_workspace: BarColors;
     /**
-     * UNUSED
-     *
      * Border, background and text color for a workspace button when the
      * workspace does not have focus and is not active (visible) on any output.
      * This will be the case for most workspaces.

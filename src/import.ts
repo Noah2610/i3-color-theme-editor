@@ -73,19 +73,21 @@ function parseConfig(configRaw: string): RecursivePartial<Theme> | null {
     const isThemeCmdBar = (s: string): s is keyof Theme["bar"] =>
         themeCmdsBar.includes(s as any);
 
+    const isCmdComment = (s: string): s is "#" => s === "#";
+
     const reBlockStart = /{\s*$/;
     const reBlockEnd = /^\s*}/;
     let blocks: string[] = [];
     const vars: Record<string, string> = {};
 
-    for (const line of lines) {
+    for (const line of lines.map((l) => l.trim())) {
         if (!line) {
             continue;
         }
 
         const [cmd, ...args] = line.split(/\s+/);
 
-        if (!cmd) {
+        if (!cmd || isCmdComment(cmd)) {
             continue;
         }
 
