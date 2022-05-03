@@ -3,7 +3,7 @@ import { getContext } from "../context";
 import { applyTheme } from "./applyTheme";
 import { updateEditor } from "../editor";
 import { exportConfig } from "../export";
-import { merge, RecursivePartial } from "../util";
+import { merge, RecursivePartial, safeObjectKeys } from "../util";
 
 interface UpdateThemeOptions {
     noExport: boolean;
@@ -23,11 +23,23 @@ export function updateTheme(
     };
 
     const context = getContext();
-    context.theme = merge(context.theme, theme);
+    context.theme = updateIndicatorAndChildBorderColors(
+        merge(context.theme, theme),
+    );
     applyTheme(theme);
     updateEditor(context.theme);
 
     if (!noExport) {
         exportConfig(context);
     }
+}
+
+function updateIndicatorAndChildBorderColors(theme: Theme): Theme {
+    for (const windowKey of safeObjectKeys(theme.window)) {
+        const colors = theme.window[windowKey];
+        if (typeof colors === "string") continue;
+        colors.indicator = colors.border;
+        colors.child_border = colors.border;
+    }
+    return theme;
 }
