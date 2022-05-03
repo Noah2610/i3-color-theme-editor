@@ -104,9 +104,9 @@ export interface Colors {
     border: Color;
     background: Color;
     text: Color;
-    /** UNUSED */
+    /** Always uses border color */
     indicator?: Color;
-    /** UNUSED */
+    /** Always uses border color */
     child_border?: Color;
 }
 
