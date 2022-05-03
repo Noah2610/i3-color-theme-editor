@@ -26,6 +26,18 @@
     border-color: var(--theme-bar-focused_workspace-border);
 }
 
+.workspace.--active {
+    background-color: var(--theme-bar-active_workspace-background);
+    color: var(--theme-bar-active_workspace-text);
+    border-color: var(--theme-bar-active_workspace-border);
+}
+
+.workspace.--inactive {
+    background-color: var(--theme-bar-inactive_workspace-background);
+    color: var(--theme-bar-inactive_workspace-text);
+    border-color: var(--theme-bar-inactive_workspace-border);
+}
+
 .workspace.--urgent {
     background-color: var(--theme-bar-urgent_workspace-background);
     color: var(--theme-bar-urgent_workspace-text);

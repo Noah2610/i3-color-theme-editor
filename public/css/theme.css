@@ -21,6 +21,10 @@
     --theme-bar-active_workspace-text: #000000;
     --theme-bar-active_workspace-border: #000000;
 
+    --theme-bar-inactive_workspace-background: #000000;
+    --theme-bar-inactive_workspace-text: #000000;
+    --theme-bar-inactive_workspace-border: #000000;
+
     --theme-bar-urgent_workspace-background: #000000;
     --theme-bar-urgent_workspace-text: #000000;
     --theme-bar-urgent_workspace-border: #000000;
@@ -29,9 +33,6 @@
     --theme-bar-background: #000000;
     --theme-bar-statusline: #000000;
     --theme-bar-separator: #000000;
-    --theme-bar-inactive_workspace-background: #000000;
-    --theme-bar-inactive_workspace-text: #000000;
-    --theme-bar-inactive_workspace-border: #000000;
     --theme-bar-binding_mode-background: #000000;
     --theme-bar-binding_mode-text: #000000;
     --theme-bar-binding_mode-border: #000000;
