@@ -29,7 +29,7 @@ export function importConfig(context: Context) {
         return;
     }
 
-    updateTheme(theme, { noExport: true });
+    updateTheme(theme);
 }
 
 function getRawConfig(): string {

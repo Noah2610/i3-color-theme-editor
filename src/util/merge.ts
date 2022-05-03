@@ -35,5 +35,5 @@ function aOrB(a: unknown, b: unknown): unknown {
         return a;
     }
 
-    return b ?? a;
+    return b || a;
 }

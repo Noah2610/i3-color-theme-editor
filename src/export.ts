@@ -87,17 +87,19 @@ function getThemeConfig(theme: Theme): ThemeConfig {
 }
 
 function getThemeConfigValue(value: Color | Colors): string {
+    const isTruthy = (s: string | undefined): s is string => !!(s && s.trim());
+
     switch (typeof value) {
         case "string": {
             return value;
         }
         case "object": {
             let base = `${value.border} ${value.background} ${value.text}`;
-            if (
-                value.indicator !== undefined &&
-                value.child_border !== undefined
-            ) {
-                base += ` ${value.indicator} ${value.child_border}`;
+            if (isTruthy(value.indicator)) {
+                base += ` ${value.indicator}`;
+                if (isTruthy(value.child_border)) {
+                    base += ` ${value.child_border}`;
+                }
             }
             return base;
         }
