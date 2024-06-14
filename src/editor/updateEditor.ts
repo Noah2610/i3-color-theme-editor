@@ -39,6 +39,12 @@ export function updateEditor(theme: Theme, editorEl?: HTMLElement) {
     const editorBar = expectEl(".window-bar", editorEl);
     editorBar.innerText = `${themePartKey} ${themeValueKey}`;
 
+    const configPath = [
+        themePartKey === "window" ? "client" : themePartKey,
+        themeValueKey,
+    ].join(".");
+    editorBar.title = configPath;
+
     const editorInputEls = expectEls(".editor-input", editorEl);
     for (const editorEl of editorInputEls) {
         const dataEditor = editorEl.getAttribute("data-editor");
