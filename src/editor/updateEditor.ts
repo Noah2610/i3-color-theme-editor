@@ -100,38 +100,41 @@ export function updateEditor(theme: Theme, editorEl?: HTMLElement) {
             }
         }
 
+        const colorsLen =
+            themePartKey === "bar"
+                ? BAR_THEME_SINGLE_COLOR_KEYS.has(
+                      themeValueKey as keyof BarTheme,
+                  )
+                    ? 1
+                    : 3
+                : themePartKey === "window"
+                ? WINDOW_THEME_SINGLE_COLOR_KEYS.has(
+                      themeValueKey as keyof WindowTheme,
+                  )
+                    ? 1
+                    : COLOR_POSITIONS.length
+                : (() => {
+                      throw new Error("Unreachable");
+                  })();
+        const colorDesc = getHtmlLabelTitleFor(
+            configPath,
+            dataEditorColor,
+            inputEl.value,
+            colorsLen,
+        );
+
         const inputElDisplay = inputEl.previousElementSibling;
         if (
             inputElDisplay &&
             inputElDisplay.classList.contains("input-color-display")
         ) {
             inputElDisplay.innerHTML = inputEl.value;
+            "title" in inputElDisplay && (inputElDisplay.title = colorDesc);
         }
 
         const labelEl = inputEl.labels?.[0];
         if (labelEl) {
-            const colorsLen =
-                themePartKey === "bar"
-                    ? BAR_THEME_SINGLE_COLOR_KEYS.has(
-                          themeValueKey as keyof BarTheme,
-                      )
-                        ? 1
-                        : 3
-                    : themePartKey === "window"
-                    ? WINDOW_THEME_SINGLE_COLOR_KEYS.has(
-                          themeValueKey as keyof WindowTheme,
-                      )
-                        ? 1
-                        : COLOR_POSITIONS.length
-                    : (() => {
-                          throw new Error("Unreachable");
-                      })();
-            labelEl.title = getHtmlLabelTitleFor(
-                configPath,
-                dataEditorColor,
-                inputEl.value,
-                colorsLen,
-            );
+            labelEl.title = colorDesc;
         }
 
         // inputEl.setAttribute("data-editor-target", dataEditorTarget);
@@ -155,4 +158,3 @@ function getHtmlLabelTitleFor(
             .join(" ")
     );
 }
-
