@@ -11,5 +11,23 @@ body {
 }
 
 [data-theme]:not(.--noedit) {
+    position: relative;
     cursor: pointer;
+}
+
+[data-theme]:not(.--noedit):hover::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    inset: 0;
+    background-color: #ffffff10;
+    pointer-events: none;
+
+    opacity: 0;
+    transition: opacity 200ms ease-in-out;
+}
+
+[data-theme]:not(.--noedit):hover::after {
+    opacity: 1;
 }
