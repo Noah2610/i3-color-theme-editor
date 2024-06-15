@@ -6,7 +6,7 @@
     "license": "MIT",
     "scripts": {
         "dev": "NODE_OPTIONS=--openssl-legacy-provider npm-run-all -lnp build:watch serve",
-        "build": "webpack",
+        "build": "NODE_OPTIONS=--openssl-legacy-provider webpack",
         "build:watch": "yarn run build --watch",
         "serve": "live-server ./public --no-browser --port 8080"
     },
