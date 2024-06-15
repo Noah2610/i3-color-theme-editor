@@ -6,6 +6,7 @@
 }
 
 .desktop-bar {
+    position: relative;
     flex-grow: 0;
     display: flex;
     justify-content: space-between;
@@ -32,6 +33,8 @@
     background-color: var(--theme-bar-focused_separator-background);
     color: var(--theme-bar-focused_separator-text);
     border-color: var(--theme-bar-focused_separator-border);
+
+    margin: 0 1em;
 }
 .desktop-bar__separator::before {
     content: var(--config-bar-separator-symbol);
@@ -47,6 +50,22 @@
     background-color: var(--theme-bar-focused_statusline-background);
     color: var(--theme-bar-focused_statusline-text);
     border-color: var(--theme-bar-focused_statusline-border);
+}
+
+.desktop-bar__tray {
+    height: 100%;
+}
+
+.desktop-bar__tray__item {
+    position: relative;
+    display: inline-block;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+}
+
+.desktop-bar__tray__item img {
+    height: 100%;
+    width: 100%;
 }
 
 .desktop-body {
