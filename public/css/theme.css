@@ -79,6 +79,6 @@
     /* Default values for i3 settings that aren't configurable. */
 
     --config-bar-separator-symbol: "|";
-    --config-bar-border-width: 2px;
-    --config-window-border-width: 2px;
+    --config-bar-border-width: 0.25em;
+    --config-window-border-width: 0.25em;
 }

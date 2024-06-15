@@ -10,6 +10,7 @@
     flex-grow: 0;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     height: 2em;
     border: solid var(--config-bar-border-width);
     box-sizing: border-box;
