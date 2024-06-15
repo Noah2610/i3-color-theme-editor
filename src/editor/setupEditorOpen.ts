@@ -1,10 +1,4 @@
-import {
-    expectEl,
-    expectEls,
-    getThemeValue,
-    openEditor,
-    validateThemeKey,
-} from "../util";
+import { expectEl, openEditor, validateThemeKey } from "../util";
 import { Context } from "../context";
 import { updateEditor } from "./updateEditor";
 

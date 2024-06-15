@@ -1,22 +1,22 @@
 import { expectEl, expectEls, validateThemeKey } from "../util";
 import { Theme, Colors, Color, BarTheme, WindowTheme } from "../theme";
 
-const BAR_THEME_SINGLE_COLOR_KEYS: readonly Set<keyof BarTheme> = new Set([
+const BAR_THEME_SINGLE_COLOR_KEYS: Set<keyof BarTheme> = new Set([
     "background",
     "statusline",
     "separator",
-]) as const;
-const WINDOW_THEME_SINGLE_COLOR_KEYS: readonly Set<keyof WindowTheme> = new Set([
+]);
+const WINDOW_THEME_SINGLE_COLOR_KEYS: Set<keyof WindowTheme> = new Set([
     "background",
-]) as const;
-const COLOR_POSITIONS: readonly (keyof Colors)[] = [
+]);
+const COLOR_POSITIONS: readonly (keyof Colors | "color")[] = [
     "border",
     "background",
     "text",
     "indicator",
     "child_border",
 ] as const;
-const COLOR_BLANK = "#" + ("_").repeat(6);
+const COLOR_BLANK = "#" + "_".repeat(6);
 
 export function updateEditor(theme: Theme, editorEl?: HTMLElement) {
     editorEl = editorEl || expectEl(".editor");
@@ -80,7 +80,9 @@ export function updateEditor(theme: Theme, editorEl?: HTMLElement) {
         editorEl,
     );
     for (const inputEl of inputEls) {
-        const dataEditorColor = inputEl.getAttribute("data-editor-color") as keyof Colors;
+        const dataEditorColor = inputEl.getAttribute("data-editor-color") as
+            | keyof Colors
+            | "color";
         switch (dataEditorColor) {
             case "color": {
                 if (typeof themeValue === "string") {
@@ -106,23 +108,29 @@ export function updateEditor(theme: Theme, editorEl?: HTMLElement) {
             inputElDisplay.innerHTML = inputEl.value;
         }
 
-        const labelEl = inputEl.labels[0];
+        const labelEl = inputEl.labels?.[0];
         if (labelEl) {
             const colorsLen =
                 themePartKey === "bar"
-                ? BAR_THEME_SINGLE_COLOR_KEYS.has(themeValueKey)
-                    ? 1
-                    : 3
-                : themePartKey === "window"
-                ? WINDOW_THEME_SINGLE_COLOR_KEYS.has(themeValueKey)
-                    ? 1
-                    : COLOR_POSITIONS.length
-                : (() => { throw new Error("Unreachable"); })();
+                    ? BAR_THEME_SINGLE_COLOR_KEYS.has(
+                          themeValueKey as keyof BarTheme,
+                      )
+                        ? 1
+                        : 3
+                    : themePartKey === "window"
+                    ? WINDOW_THEME_SINGLE_COLOR_KEYS.has(
+                          themeValueKey as keyof WindowTheme,
+                      )
+                        ? 1
+                        : COLOR_POSITIONS.length
+                    : (() => {
+                          throw new Error("Unreachable");
+                      })();
             labelEl.title = getHtmlLabelTitleFor(
                 configPath,
                 dataEditorColor,
                 inputEl.value,
-                colorsLen
+                colorsLen,
             );
         }
 
@@ -131,15 +139,20 @@ export function updateEditor(theme: Theme, editorEl?: HTMLElement) {
 }
 
 function getHtmlLabelTitleFor(
-    configPath: `${keyof Theme}.${keyof keyof Theme}`,
-    colorPath: keyof Colors,
+    configPath: string,
+    colorPath: keyof Colors | "color",
     color: Color,
     len = COLOR_POSITIONS.length,
 ): string {
     const colorPathIdx = COLOR_POSITIONS.indexOf(colorPath);
-    return configPath + ": " + len.map((colorPos, i) =>
-        i < colorPathIdx || i > colorPathIdx
-        ? COLOR_BLANK
-        : color
-    ).join(" ");
+    return (
+        configPath +
+        ": " +
+        Array.from({ length: len })
+            .map((_, i) =>
+                i < colorPathIdx || i > colorPathIdx ? COLOR_BLANK : color,
+            )
+            .join(" ")
+    );
 }
+
