@@ -15,7 +15,12 @@ body {
     cursor: pointer;
 }
 
-[data-theme]:not(.--noedit):hover::after {
+[data-theme]:not(.--noedit):not(:has([data-theme]:not(.--noedit):hover)):hover {
+    outline: 2px solid #ffffff99;
+    outline-offset: -2px;
+}
+
+[data-theme]:not(.--noedit)::after {
     content: "";
     position: absolute;
     width: 100%;
@@ -25,9 +30,9 @@ body {
     pointer-events: none;
 
     opacity: 0;
-    transition: opacity 200ms ease-in-out;
+    transition: opacity 100ms ease-in-out;
 }
 
-[data-theme]:not(.--noedit):hover::after {
+[data-theme]:not(.--noedit):not(:has([data-theme]:not(.--noedit):hover)):hover::after {
     opacity: 1;
 }
