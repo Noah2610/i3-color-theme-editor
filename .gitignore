@@ -1,5 +1,7 @@
 /node_modules/
 
+/dist/
+
 /public/bundle.js
 /public/*.map
 /.vercel/

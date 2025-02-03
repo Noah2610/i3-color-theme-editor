@@ -1,22 +1,17 @@
 {
     "name": "i3-color-theme-editor",
     "version": "0.0.0",
-    "main": "index.js",
     "author": "Noah Rosenzweig <rosenzweig.noah@gmail.com>",
     "license": "MIT",
+    "type": "module",
     "scripts": {
-        "dev": "NODE_OPTIONS=--openssl-legacy-provider npm-run-all -lnp build:watch serve",
-        "build": "NODE_OPTIONS=--openssl-legacy-provider webpack",
-        "build:watch": "yarn run build --watch",
-        "serve": "live-server ./public --no-browser --port 8080"
+        "build": "bun build ./public/index.html --outdir ./dist",
+        "dev": "bun run --watch --port 8080 --no-clear-screen ./bin/serve.ts"
     },
     "devDependencies": {
-        "live-server": "^1.2.1",
-        "npm-run-all": "^4.1.5",
-        "prettier": "^2.3.1",
-        "ts-loader": "^9.2.3",
-        "typescript": "^4.3.4",
-        "webpack": "^5.40.0",
-        "webpack-cli": "^4.7.2"
+        "@types/bun": "^1.2.2",
+        "bun": "^1.2.2",
+        "prettier": "^3.4.2",
+        "typescript": "^5.7.3"
     }
 }
