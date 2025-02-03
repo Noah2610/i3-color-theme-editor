@@ -1,6 +1,6 @@
 {
     "name": "i3-color-theme-editor",
-    "version": "0.0.0",
+    "version": "0.1.0",
     "author": "Noah Rosenzweig <rosenzweig.noah@gmail.com>",
     "license": "MIT",
     "type": "module",
