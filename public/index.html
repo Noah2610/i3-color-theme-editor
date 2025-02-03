@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
@@ -17,67 +17,81 @@
     </head>
     <body>
         <main class="theme">
-            <div class="desktop">
-                <div class="desktop-bar" data-theme="bar.focused_background">
+            <div class="desktop" tabindex="-1">
+                <div
+                    class="desktop-bar"
+                    tabindex="0"
+                    data-theme="bar.focused_background"
+                >
                     <div class="desktop-bar__workspaces">
                         <!-- {{{ WORKSPACES -->
                         <div class="workspaces">
                             <div
                                 class="workspace --focused"
+                                tabindex="0"
                                 data-theme="bar.focused_workspace"
                             >
                                 1
                             </div>
                             <div
                                 class="workspace --inactive"
+                                tabindex="0"
                                 data-theme="bar.inactive_workspace"
                             >
                                 2
                             </div>
                             <div
                                 class="workspace --urgent"
+                                tabindex="0"
                                 data-theme="bar.urgent_workspace"
                             >
                                 3
                             </div>
                             <div
                                 class="workspace --inactive"
+                                tabindex="0"
                                 data-theme="bar.inactive_workspace"
                             >
                                 4
                             </div>
                             <div
                                 class="workspace --inactive"
+                                tabindex="0"
                                 data-theme="bar.inactive_workspace"
                             >
                                 5
                             </div>
                             <div
                                 class="workspace --inactive"
+                                tabindex="0"
                                 data-theme="bar.inactive_workspace"
                             >
                                 6
                             </div>
                             <div
                                 class="workspace --inactive"
+                                tabindex="0"
                                 data-theme="bar.inactive_workspace"
                             >
                                 7
                             </div>
                             <div
                                 class="workspace --active"
+                                tabindex="0"
                                 data-theme="bar.active_workspace"
                             >
                                 8
                             </div>
                             <div
                                 class="workspace --active"
+                                tabindex="0"
                                 data-theme="bar.active_workspace"
                             >
                                 9
                             </div>
                             <div
                                 class="workspace --active"
+                                tabindex="0"
                                 data-theme="bar.active_workspace"
                             >
                                 10
@@ -88,11 +102,13 @@
 
                     <!-- <div -->
                     <!--     class="desktop-bar__separator" -->
+                    <!--     tabindex="0" -->
                     <!--     data-theme="bar.focused_separator" -->
                     <!-- ></div> -->
 
                     <div
                         class="desktop-bar__statusline now"
+                        tabindex="0"
                         data-theme="bar.focused_statusline"
                     >
                         Monday 01.01.2021 00:00:00
@@ -100,6 +116,7 @@
 
                     <div
                         class="desktop-bar__separator"
+                        tabindex="0"
                         data-theme="bar.focused_separator"
                     ></div>
 
@@ -129,18 +146,25 @@
                     >
                         <div
                             class="window --focused"
+                            tabindex="0"
                             data-theme="window.focused"
                         >
                             <div class="window-bar">Focused Window</div>
                             <div
                                 class="window-body"
+                                tabindex="0"
                                 data-theme="window.placeholder"
                             ></div>
                         </div>
-                        <div class="window" data-theme="window.unfocused">
+                        <div
+                            class="window"
+                            tabindex="0"
+                            data-theme="window.unfocused"
+                        >
                             <div class="window-bar">Unfocused Window</div>
                             <div
                                 class="window-body"
+                                tabindex="0"
                                 data-theme="window.placeholder"
                             ></div>
                         </div>
@@ -152,6 +176,7 @@
                     >
                         <div
                             class="window --focused-inactive"
+                            tabindex="0"
                             data-theme="window.focused_inactive"
                         >
                             <div class="window-bar">
@@ -159,21 +184,20 @@
                             </div>
                             <div
                                 class="window-body"
+                                tabindex="0"
                                 data-theme="window.placeholder"
                             ></div>
                         </div>
                         <div class="window --urgent">
-                            <div class="window-bar" data-theme="window.urgent">
+                            <div
+                                class="window-bar"
+                                tabindex="0"
+                                data-theme="window.urgent"
+                            >
                                 Urgent Window
                             </div>
                             <div
-                                class="
-                                    window-body
-                                    --no-placeholder
-                                    --noedit
-                                    export
-                                    import
-                                "
+                                class="window-body --no-placeholder --noedit export import"
                                 data-theme="window.placeholder"
                             >
                                 <!-- <button class="export__button"> -->
@@ -193,8 +217,20 @@
             <div
                 class="editor window --focused --noedit draggable"
                 data-theme="window.focused"
+                tabindex="-1"
+                inert
             >
-                <div class="window-bar draggable__handle"></div>
+                <div class="editor-header window-bar draggable__handle">
+                    <div class="__title"></div>
+                    <button
+                        title="Close editor"
+                        aria-label="Close editor"
+                        class="__close"
+                    >
+                        X
+                    </button>
+                </div>
+
                 <div class="editor-body window-body --no-placeholder">
                     <form action="#" class="editor-form" data-editor-target="">
                         <div class="editor-input --hidden" data-editor="color">

@@ -4,7 +4,8 @@ import { setupExport } from "./export";
 import { setupImport } from "./import";
 import { newTheme, Theme, updateTheme } from "./theme";
 import { setupTime } from "./time";
-import { createUnsubs } from "./util";
+import { createUnsubs, expectEl } from "./util";
+import { trapFocus, untrapFocus } from "./util/trapFocus";
 
 export type WindowWithContext = Window & {
     APP_CONTEXT?: Context;
@@ -30,6 +31,7 @@ export function setupContext(): Context {
     unsubs.add(setupExport(context));
     unsubs.add(setupImport(context));
     unsubs.add(setupEditor(context));
+    unsubs.add(setupTrapDesktopFocus());
 
     window.onunload = unsubs.unsubAll;
 
@@ -45,4 +47,13 @@ export function getContext(): Context {
         );
     }
     return windowWithContext.APP_CONTEXT;
+}
+
+function setupTrapDesktopFocus(): () => void {
+    const desktopEl = expectEl(".desktop");
+
+    const trapFocusState = trapFocus(desktopEl, { focusFirst: false });
+    desktopEl.focus();
+
+    return () => trapFocusState && untrapFocus(trapFocusState);
 }

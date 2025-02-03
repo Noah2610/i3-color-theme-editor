@@ -1,16 +1,19 @@
+import { trapFocus, untrapFocus, type TrapFocusState } from "./trapFocus";
+
 const OPEN_EDITOR_URGENT_TIMEOUT_MS = 500;
 let openEditorUrgentTimeoutId: NodeJS.Timeout | null = null;
 
-export function openEditor(editorEl: HTMLElement, event: MouseEvent) {
-    const mousePos = {
-        x: event.pageX,
-        y: event.pageY,
-    };
-
-    editorEl.style.left = `${mousePos.x}px`;
-    editorEl.style.top = `${mousePos.y}px`;
+export function openEditor(
+    editorEl: HTMLElement,
+    pos: { x: number; y: number },
+) {
+    editorEl.style.left = `${pos.x}px`;
+    editorEl.style.top = `${pos.y}px`;
 
     editorEl.classList.add("--open", "--urgent");
+    editorEl.removeAttribute("inert");
+
+    trapEditorFocus(editorEl);
 
     if (openEditorUrgentTimeoutId !== null) {
         clearTimeout(openEditorUrgentTimeoutId);
@@ -23,4 +26,23 @@ export function openEditor(editorEl: HTMLElement, event: MouseEvent) {
 
 export function closeEditor(editorEl: HTMLElement) {
     editorEl.classList.remove("--open");
+    editorEl.setAttribute("inert", "");
+
+    untrapEditorFocus();
+}
+
+let TRAP_EDITOR_FOCUS_STATE: TrapFocusState | null = null;
+
+function trapEditorFocus(editorEl: HTMLElement) {
+    untrapEditorFocus();
+    TRAP_EDITOR_FOCUS_STATE = trapFocus(editorEl);
+}
+
+function untrapEditorFocus() {
+    if (TRAP_EDITOR_FOCUS_STATE === null) {
+        return;
+    }
+
+    untrapFocus(TRAP_EDITOR_FOCUS_STATE);
+    TRAP_EDITOR_FOCUS_STATE = null;
 }

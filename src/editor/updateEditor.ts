@@ -22,9 +22,9 @@ export function updateEditor(theme: Theme, editorEl?: HTMLElement) {
     editorEl = editorEl || expectEl(".editor");
     const formEl = expectEl(".editor-form", editorEl);
 
-    if (!editorEl.classList.contains("--open")) {
-        return;
-    }
+    // if (!editorEl.classList.contains("--open")) {
+    //     return;
+    // }
 
     const dataEditorTarget = formEl.getAttribute("data-editor-target");
     if (!dataEditorTarget) {
@@ -53,14 +53,14 @@ export function updateEditor(theme: Theme, editorEl?: HTMLElement) {
         }
     }
 
-    const editorBar = expectEl(".window-bar", editorEl);
-    editorBar.innerText = `${themePartKey} ${themeValueKey}`;
+    const editorTitle = expectEl(".window-bar > .__title", editorEl);
+    editorTitle.innerText = `${themePartKey} ${themeValueKey}`;
 
     const configPath = [
         themePartKey === "window" ? "client" : `${themePartKey}.colors`,
         themeValueKey,
     ].join(".");
-    editorBar.title = configPath;
+    editorTitle.title = configPath;
 
     const editorInputEls = expectEls(".editor-input", editorEl);
     for (const editorEl of editorInputEls) {

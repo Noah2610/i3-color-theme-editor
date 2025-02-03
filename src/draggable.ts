@@ -28,6 +28,10 @@ function setupDraggableListeners(
     };
 
     const onMouseDown = (event: MouseEvent) => {
+        if (event.button !== 0) {
+            return;
+        }
+
         state.isDragging = true;
         draggableEl.classList.add("--dragging");
 
@@ -45,7 +49,11 @@ function setupDraggableListeners(
         };
     };
 
-    const onMouseUp = (_event: MouseEvent) => {
+    const onMouseUp = (event: MouseEvent) => {
+        if (event.button !== 0 || !state.isDragging) {
+            return;
+        }
+
         state.isDragging = false;
         draggableEl.classList.remove("--dragging");
     };

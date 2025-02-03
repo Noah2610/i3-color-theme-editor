@@ -11,6 +11,15 @@ a:is(:hover, :focus) > .link-icon {
     border-radius: 50%;
 }
 
+:is(a, [data-theme]:not(.--noedit)):focus-visible {
+    outline: 0;
+}
+
+:not(:is(a, [data-theme]:not(.--noedit))):focus-visible {
+    outline: 2px solid #3345df;
+    outline-offset: -2px;
+}
+
 .--hidden {
     display: none !important;
 }
@@ -20,7 +29,7 @@ a:is(:hover, :focus) > .link-icon {
     cursor: pointer;
 }
 
-[data-theme]:not(.--noedit):not(:has(:is([data-theme]:not(.--noedit):hover, a:hover))):hover {
+[data-theme]:not(.--noedit):not(:has(:is([data-theme]:not(.--noedit):is(:hover, :focus), a:hover))):is(:hover, :focus) {
     outline: 2px solid #ffffff99;
     outline-offset: -2px;
 }
@@ -38,6 +47,6 @@ a:is(:hover, :focus) > .link-icon {
     transition: opacity 100ms ease-in-out;
 }
 
-[data-theme]:not(.--noedit):not(:has(:is([data-theme]:not(.--noedit):hover, a:hover))):hover::after {
+[data-theme]:not(.--noedit):not(:has(:is([data-theme]:not(.--noedit):hover, a:hover))):is(:hover, :focus)::after {
     opacity: 1;
 }

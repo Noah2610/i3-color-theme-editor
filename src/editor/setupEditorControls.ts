@@ -1,14 +1,15 @@
-import { closeEditor, expectEl } from "../util";
+import { closeEditor, createUnsubs, expectEl } from "../util";
 
 export function setupEditorControls(editorEl: HTMLElement): () => void {
-    const unsubs: (() => void)[] = [];
+    const unsubs = createUnsubs();
 
-    unsubs.push(setupClose(editorEl));
+    unsubs.add(setupCloseKey(editorEl));
+    unsubs.add(setupCloseButton(editorEl));
 
-    return () => unsubs.forEach((unsub) => unsub());
+    return unsubs.unsubAll;
 }
 
-function setupClose(editorEl: HTMLElement): () => void {
+function setupCloseKey(editorEl: HTMLElement): () => void {
     const onKey = (event: KeyboardEvent) => {
         if (event.key === "Escape") {
             closeEditor(editorEl);
@@ -17,4 +18,15 @@ function setupClose(editorEl: HTMLElement): () => void {
 
     document.addEventListener("keyup", onKey);
     return () => document.removeEventListener("keyup", onKey);
+}
+
+function setupCloseButton(editorEl: HTMLElement): () => void {
+    const closeButtonEl = expectEl(".__close", editorEl);
+
+    const onClick = () => {
+        closeEditor(editorEl);
+    };
+
+    closeButtonEl.addEventListener("click", onClick);
+    return () => closeButtonEl.removeEventListener("click", onClick);
 }
