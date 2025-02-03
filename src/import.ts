@@ -22,14 +22,18 @@ export function setupImport(context: Context): () => void {
     return unsubs.unsubAll;
 }
 
-export function importConfig(context: Context) {
+export function importConfig(_context: Context) {
     const configRaw = getRawConfig();
     const theme = parseConfig(configRaw);
     if (!theme) {
         return;
     }
 
-    updateTheme(theme);
+    updateTheme(theme, {
+        exportTheme: true,
+        onlyWhenChanged: true,
+        commitToHistory: true,
+    });
 }
 
 function getRawConfig(): string {
