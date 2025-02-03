@@ -1,4 +1,3 @@
-import { updateColorPickerInputs } from "src/colorPicker";
 import { trapFocus, untrapFocus, type TrapFocusState } from "./trapFocus";
 
 const OPEN_EDITOR_URGENT_TIMEOUT_MS = 500;
@@ -8,8 +7,6 @@ export function openEditor(
     editorEl: HTMLElement,
     pos: { x: number; y: number },
 ) {
-    // updateColorPickerInputs(editorEl);
-
     editorEl.style.left = `${pos.x}px`;
     editorEl.style.top = `${pos.y}px`;
 
