@@ -123,16 +123,6 @@ export function updateEditor(theme: Theme, editorEl?: HTMLElement) {
             colorsLen,
         );
 
-        const inputElDisplay =
-            inputEl.previousElementSibling as HTMLElement | null;
-        if (
-            inputElDisplay &&
-            inputElDisplay.classList.contains("input-color-display")
-        ) {
-            inputElDisplay.innerHTML = inputEl.value;
-            inputElDisplay.title = colorDesc;
-        }
-
         const labelEl = inputEl.labels?.[0];
         if (labelEl) {
             labelEl.title = colorDesc;
