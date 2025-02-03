@@ -8,5 +8,6 @@ export function setupColorPicker() {
         wrap: true,
         selectInput: true,
         themeMode: "auto",
+        theme: "large",
     });
 }
