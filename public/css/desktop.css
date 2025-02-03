@@ -55,6 +55,9 @@
 
 .desktop-bar__tray {
     height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
 }
 
 .desktop-bar__tray__item {

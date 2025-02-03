@@ -1,3 +1,4 @@
+import { commitThemeToHistory } from "src/history";
 import { getContext } from "../context";
 import { updateEditor } from "../editor";
 import { exportConfig } from "../export";
@@ -15,6 +16,7 @@ interface UpdateThemeOptions {
     applyTheme: boolean;
     updateEditor: boolean;
     exportTheme: boolean;
+    commitToHistory: boolean;
 }
 
 const DEFAULT_UPDATE_THEME_OPTIONS: UpdateThemeOptions = {
@@ -22,6 +24,7 @@ const DEFAULT_UPDATE_THEME_OPTIONS: UpdateThemeOptions = {
     applyTheme: true,
     updateEditor: true,
     exportTheme: true,
+    commitToHistory: false,
 };
 
 export function updateTheme(
@@ -54,6 +57,10 @@ export function updateTheme(
 
     if (options.exportTheme) {
         exportConfig(context);
+    }
+
+    if (options.commitToHistory) {
+        commitThemeToHistory(context.history, context.theme);
     }
 }
 

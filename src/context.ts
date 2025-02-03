@@ -1,6 +1,7 @@
 import { setupDraggable } from "./draggable";
 import { setupEditor } from "./editor";
 import { setupExport } from "./export";
+import { newHistory, setupHistory, type History } from "./history";
 import { setupImport } from "./import";
 import { newTheme, Theme, updateTheme } from "./theme";
 import { setupTime } from "./time";
@@ -15,6 +16,7 @@ export const windowWithContext = window as unknown as WindowWithContext;
 
 export interface Context {
     theme: Theme;
+    history: History;
 }
 
 export function setupContext(): () => void {
@@ -24,7 +26,8 @@ export function setupContext(): () => void {
     unsubs.add(setupDraggable());
 
     const theme = newTheme();
-    const context: Context = { theme };
+    const history = newHistory(theme);
+    const context: Context = { theme, history };
 
     windowWithContext.APP_CONTEXT = context;
 
@@ -32,6 +35,7 @@ export function setupContext(): () => void {
     unsubs.add(setupImport(context));
     unsubs.add(setupEditor(context));
     unsubs.add(setupTrapDesktopFocus());
+    unsubs.add(setupHistory(history));
 
     updateTheme(context.theme);
 

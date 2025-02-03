@@ -46,7 +46,11 @@ export function setupEditorInput(
 
     const inputOnChange = (event: Event) => {
         const changedTheme = handleInput(event);
-        changedTheme && updateTheme(changedTheme, { onlyWhenChanged: false });
+        changedTheme &&
+            updateTheme(changedTheme, {
+                onlyWhenChanged: false,
+                commitToHistory: true,
+            });
     };
 
     const inputOnInput = (event: Event) => {
@@ -56,6 +60,7 @@ export function setupEditorInput(
                 updateEditor: false,
                 applyTheme: true,
                 exportTheme: false,
+                commitToHistory: false,
             });
     };
 
