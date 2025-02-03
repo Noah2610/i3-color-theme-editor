@@ -6,6 +6,11 @@ body {
     font-size: 20px;
 }
 
+a:is(:hover, :focus) > .link-icon {
+    box-shadow: 0 0 0 2px #ffffff;
+    border-radius: 50%;
+}
+
 .--hidden {
     display: none !important;
 }
@@ -15,7 +20,7 @@ body {
     cursor: pointer;
 }
 
-[data-theme]:not(.--noedit):not(:has([data-theme]:not(.--noedit):hover)):hover {
+[data-theme]:not(.--noedit):not(:has(:is([data-theme]:not(.--noedit):hover, a:hover))):hover {
     outline: 2px solid #ffffff99;
     outline-offset: -2px;
 }
@@ -33,6 +38,6 @@ body {
     transition: opacity 100ms ease-in-out;
 }
 
-[data-theme]:not(.--noedit):not(:has([data-theme]:not(.--noedit):hover)):hover::after {
+[data-theme]:not(.--noedit):not(:has(:is([data-theme]:not(.--noedit):hover, a:hover))):hover::after {
     opacity: 1;
 }
