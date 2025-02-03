@@ -1,0 +1,10 @@
+@import "@melloware/coloris/dist/coloris.css";
+
+@import "./main.css";
+@import "./theme.css";
+@import "./desktop.css";
+@import "./workspace.css";
+@import "./window.css";
+@import "./editor.css";
+@import "./draggable.css";
+@import "./export.css";

@@ -1,3 +1,4 @@
+export * from "./deepEqual";
 export * from "./editorHelpers";
 export * from "./expectEl";
 export * from "./merge";

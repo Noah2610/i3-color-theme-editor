@@ -3,6 +3,9 @@
   "workspaces": {
     "": {
       "name": "i3-color-theme-editor",
+      "dependencies": {
+        "@melloware/coloris": "^0.24.0",
+      },
       "devDependencies": {
         "@types/bun": "^1.2.2",
         "bun": "^1.2.2",
@@ -12,6 +15,8 @@
     },
   },
   "packages": {
+    "@melloware/coloris": ["@melloware/coloris@0.24.0", "", {}, "sha512-9RGKHqZJsUSsxb/0xaBCK5OKywobiK/xRtV8f4KQDmviqmVfkMLR3kK4DRuTTLSFdSOqkV0OQ/Niitu+rlXXYw=="],
+
     "@oven/bun-darwin-aarch64": ["@oven/bun-darwin-aarch64@1.2.2", "", { "os": "darwin", "cpu": "arm64" }, "sha512-hCDvi6GGJvsKpfGcU9xdrIhshDtzkYcGiB5wnj0jq/QM3U85qmIe8QUs7tyse9T77aZNjFIXO0GirL+oZ7C+IQ=="],
 
     "@oven/bun-darwin-x64": ["@oven/bun-darwin-x64@1.2.2", "", { "os": "darwin", "cpu": "x64" }, "sha512-W1MkLpfLMH4+aRoLNksLiODySVUlnKF5dTEmS2VlHxl4Mle+V/40/WSalpZVRPcztJMquwQy2VXox62WUmERXQ=="],

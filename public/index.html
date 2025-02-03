@@ -6,14 +6,8 @@
 
         <title>i3 Color Theme Editor</title>
 
-        <link rel="stylesheet" href="./css/main.css" />
-        <link rel="stylesheet" href="./css/theme.css" />
-        <link rel="stylesheet" href="./css/desktop.css" />
-        <link rel="stylesheet" href="./css/workspace.css" />
-        <link rel="stylesheet" href="./css/window.css" />
-        <link rel="stylesheet" href="./css/editor.css" />
-        <link rel="stylesheet" href="./css/draggable.css" />
-        <link rel="stylesheet" href="./css/export.css" />
+        <link rel="stylesheet" href="./css/styles.css" />
+        <script type="module" src="../src/index.ts"></script>
     </head>
     <body>
         <main class="theme">
@@ -241,7 +235,7 @@
                             <input
                                 name="input-color"
                                 id="input-color"
-                                type="color"
+                                type="text"
                                 class="input input--color"
                                 data-editor-color="color"
                             />
@@ -257,7 +251,7 @@
                             <input
                                 name="input-colors-border"
                                 id="input-colors-border"
-                                type="color"
+                                type="text"
                                 class="input input--color"
                                 data-editor-color="border"
                             />
@@ -271,7 +265,7 @@
                             <input
                                 name="input-colors-background"
                                 id="input-colors-background"
-                                type="color"
+                                type="text"
                                 class="input input--color"
                                 data-editor-color="background"
                             />
@@ -285,7 +279,7 @@
                             <input
                                 name="input-colors-text"
                                 id="input-colors-text"
-                                type="color"
+                                type="text"
                                 class="input input--color"
                                 data-editor-color="text"
                             />
@@ -315,7 +309,5 @@
             </div>
             <!-- }}} -->
         </main>
-
-        <script type="module" src="../src/index.ts"></script>
     </body>
 </html>

@@ -1,12 +1,15 @@
+import { updateColorPickerInputs } from "src/colorPicker";
 import { trapFocus, untrapFocus, type TrapFocusState } from "./trapFocus";
 
 const OPEN_EDITOR_URGENT_TIMEOUT_MS = 500;
-let openEditorUrgentTimeoutId: NodeJS.Timeout | null = null;
+let openEditorUrgentTimeoutId: number | null = null;
 
 export function openEditor(
     editorEl: HTMLElement,
     pos: { x: number; y: number },
 ) {
+    // updateColorPickerInputs(editorEl);
+
     editorEl.style.left = `${pos.x}px`;
     editorEl.style.top = `${pos.y}px`;
 
@@ -18,7 +21,7 @@ export function openEditor(
     if (openEditorUrgentTimeoutId !== null) {
         clearTimeout(openEditorUrgentTimeoutId);
     }
-    openEditorUrgentTimeoutId = setTimeout(() => {
+    openEditorUrgentTimeoutId = window.setTimeout(() => {
         openEditorUrgentTimeoutId = null;
         editorEl.classList.remove("--urgent");
     }, OPEN_EDITOR_URGENT_TIMEOUT_MS);

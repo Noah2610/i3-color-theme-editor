@@ -1,35 +1,58 @@
-import { Theme } from "./types";
 import { getContext } from "../context";
-import { applyTheme } from "./applyTheme";
 import { updateEditor } from "../editor";
 import { exportConfig } from "../export";
-import { merge, RecursivePartial, safeObjectKeys } from "../util";
+import {
+    deepEqual,
+    merge,
+    safeObjectKeys,
+    type RecursivePartial,
+} from "../util";
+import { applyTheme } from "./applyTheme";
+import { type Theme } from "./types";
 
 interface UpdateThemeOptions {
-    noExport: boolean;
+    onlyWhenChanged: boolean;
+    applyTheme: boolean;
+    updateEditor: boolean;
+    exportTheme: boolean;
 }
 
 const DEFAULT_UPDATE_THEME_OPTIONS: UpdateThemeOptions = {
-    noExport: false,
+    onlyWhenChanged: true,
+    applyTheme: true,
+    updateEditor: true,
+    exportTheme: true,
 };
 
 export function updateTheme(
-    theme: RecursivePartial<Theme>,
+    changedTheme: RecursivePartial<Theme>,
     opts?: Partial<UpdateThemeOptions>,
 ) {
-    const { noExport } = {
+    const options = {
         ...DEFAULT_UPDATE_THEME_OPTIONS,
         ...opts,
     };
 
     const context = getContext();
-    context.theme = updateIndicatorAndChildBorderColors(
-        merge(context.theme, theme),
+    const updatedTheme = updateIndicatorAndChildBorderColors(
+        merge(context.theme, changedTheme),
     );
-    applyTheme(theme);
-    updateEditor(context.theme);
 
-    if (!noExport) {
+    if (options.onlyWhenChanged && deepEqual(context.theme, updatedTheme)) {
+        return;
+    }
+
+    context.theme = updatedTheme;
+
+    if (options.applyTheme) {
+        applyTheme(changedTheme);
+    }
+
+    if (options.updateEditor) {
+        updateEditor(context.theme);
+    }
+
+    if (options.exportTheme) {
         exportConfig(context);
     }
 }

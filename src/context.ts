@@ -17,7 +17,7 @@ export interface Context {
     theme: Theme;
 }
 
-export function setupContext(): Context {
+export function setupContext(): () => void {
     const unsubs = createUnsubs();
 
     unsubs.add(setupTime());
@@ -33,11 +33,9 @@ export function setupContext(): Context {
     unsubs.add(setupEditor(context));
     unsubs.add(setupTrapDesktopFocus());
 
-    window.onunload = unsubs.unsubAll;
-
     updateTheme(context.theme);
 
-    return context;
+    return unsubs.unsubAll;
 }
 
 export function getContext(): Context {

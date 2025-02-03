@@ -1,5 +1,7 @@
 import { Context } from "../context";
+import { Color, Theme, updateTheme } from "../theme";
 import {
+    createUnsubs,
     expectEl,
     expectEls,
     getThemeValue,
@@ -8,23 +10,22 @@ import {
     safeObjectKeys,
     validateThemeKey,
 } from "../util";
-import { Color, Theme, updateTheme } from "../theme";
 
 export function setupEditorInput(
     context: Context,
     editorEl: HTMLElement,
 ): () => void {
-    const unsubs: (() => void)[] = [];
+    const unsubs = createUnsubs();
 
-    const inputOnChange = (event: Event) => {
+    const handleInput = (event: Event) => {
         if (!event.target) {
-            return;
+            return null;
         }
 
         const formEl = expectEl(".editor-form", editorEl);
         const dataEditorTarget = formEl.getAttribute("data-editor-target");
         if (dataEditorTarget === null) {
-            return;
+            return null;
         }
 
         const checkboxEl = expectEl<HTMLInputElement>(
@@ -40,16 +41,34 @@ export function setupEditorInput(
             { shouldUpdateEqualColors },
         );
 
-        updateTheme(changedTheme);
+        return changedTheme;
+    };
+
+    const inputOnChange = (event: Event) => {
+        const changedTheme = handleInput(event);
+        changedTheme && updateTheme(changedTheme, { onlyWhenChanged: false });
+    };
+
+    const inputOnInput = (event: Event) => {
+        const changedTheme = handleInput(event);
+        changedTheme &&
+            updateTheme(changedTheme, {
+                updateEditor: false,
+                applyTheme: true,
+                exportTheme: false,
+            });
     };
 
     const inputEls = expectEls<HTMLInputElement>(
-        `.editor-input input.input--color`,
+        ".editor-input input.input--color",
         editorEl,
     );
     for (const inputEl of inputEls) {
         inputEl.addEventListener("change", inputOnChange);
-        unsubs.push(() => inputEl.removeEventListener("change", inputOnChange));
+        inputEl.addEventListener("input", inputOnInput);
+
+        unsubs.add(() => inputEl.removeEventListener("change", inputOnChange));
+        unsubs.add(() => inputEl.removeEventListener("input", inputOnInput));
     }
 
     const formEl = expectEl(".editor-form", editorEl);
@@ -57,7 +76,7 @@ export function setupEditorInput(
     const onFormSubmit = (event: Event) => event.preventDefault();
 
     formEl.addEventListener("submit", onFormSubmit);
-    unsubs.push(() => formEl.removeEventListener("submit", onFormSubmit));
+    unsubs.add(() => formEl.removeEventListener("submit", onFormSubmit));
 
     // {{{ FORM ON CHANGE
     // const formOnChange = (_event: Event) => {
@@ -102,7 +121,7 @@ export function setupEditorInput(
     // unsubs.push(() => formEl.removeEventListener("change", formOnChange));
     // }}}
 
-    return () => unsubs.forEach((unsub) => unsub());
+    return unsubs.unsubAll;
 }
 
 function updateThemeColorFromEl(

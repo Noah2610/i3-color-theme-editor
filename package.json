@@ -8,6 +8,9 @@
         "build": "bun build ./public/index.html --outdir ./dist",
         "dev": "bun run --watch --port 8080 --no-clear-screen ./bin/serve.ts"
     },
+    "dependencies": {
+        "@melloware/coloris": "^0.24.0"
+    },
     "devDependencies": {
         "@types/bun": "^1.2.2",
         "bun": "^1.2.2",

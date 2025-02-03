@@ -86,7 +86,7 @@ export function updateEditor(theme: Theme, editorEl?: HTMLElement) {
         switch (dataEditorColor) {
             case "color": {
                 if (typeof themeValue === "string") {
-                    inputEl.value = themeValue;
+                    setInputColorValue(inputEl, themeValue);
                 }
                 break;
             }
@@ -94,7 +94,7 @@ export function updateEditor(theme: Theme, editorEl?: HTMLElement) {
             case "background":
             case "text": {
                 if (typeof themeValue !== "string") {
-                    inputEl.value = themeValue[dataEditorColor];
+                    setInputColorValue(inputEl, themeValue[dataEditorColor]);
                 }
                 break;
             }
@@ -108,14 +108,14 @@ export function updateEditor(theme: Theme, editorEl?: HTMLElement) {
                     ? 1
                     : 3
                 : themePartKey === "window"
-                ? WINDOW_THEME_SINGLE_COLOR_KEYS.has(
-                      themeValueKey as keyof WindowTheme,
-                  )
-                    ? 1
-                    : COLOR_POSITIONS.length
-                : (() => {
-                      throw new Error("Unreachable");
-                  })();
+                  ? WINDOW_THEME_SINGLE_COLOR_KEYS.has(
+                        themeValueKey as keyof WindowTheme,
+                    )
+                      ? 1
+                      : COLOR_POSITIONS.length
+                  : (() => {
+                        throw new Error("Unreachable");
+                    })();
         const colorDesc = getHtmlLabelTitleFor(
             configPath,
             dataEditorColor,
@@ -158,4 +158,9 @@ function getHtmlLabelTitleFor(
             )
             .join(" ")
     );
+}
+
+function setInputColorValue(inputEl: HTMLInputElement, value: string) {
+    inputEl.value = value;
+    inputEl.dispatchEvent(new Event("input", { bubbles: true })); // trigger coloris color picker update
 }
